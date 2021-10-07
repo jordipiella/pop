@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  localePath: '/assets/locales/'
+  localePath: '/assets/locales/',
+  apiItemsUrl: 'http://localhost:3000'
 };
 
 /*
