@@ -2,3 +2,13 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+$primary: #13c1ac;
+$secondary: #253238;
+$text: #607D8B;
+$background: #ECEFF1;
+
+
+body {
+  background-color: $background;
+}

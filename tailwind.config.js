@@ -7,7 +7,18 @@ module.exports = {
     content: ['./src/**/*.{html,ts}']
   },
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
+      }
+    },
+    backgroundColor: theme => ({
+      ...theme('colors'),
+      'primary': '#13c1ac',
+      'secondary': '#253238',
+      'text': '#607D8B',
+      'background': '#ECEFF1',
+     })
   },
   variants: {
     extend: {},

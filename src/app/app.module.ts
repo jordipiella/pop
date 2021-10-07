@@ -10,6 +10,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { httpLoaderFactory } from './utils/http-loader.factory';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { httpLoaderFactory } from './utils/http-loader.factory';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -30,7 +32,8 @@ import { httpLoaderFactory } from './utils/http-loader.factory';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    CoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]
