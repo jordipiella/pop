@@ -14,3 +14,4 @@ export * from './services/api-items/mocks/item-mock.contract';
 
 // Interfaces
 export * from './interfaces/pagination.interface';
+export * from './interfaces/response.interface';
