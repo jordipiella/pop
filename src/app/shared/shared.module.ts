@@ -4,11 +4,13 @@ import { CardComponent } from './card/card.component';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { httpLoaderFactory } from '../utils/http-loader.factory';
+import { ButtonComponent } from './button/button.component';
 
 
 @NgModule({
   declarations: [
-    CardComponent
+    CardComponent,
+    ButtonComponent
   ],
   imports: [
     CommonModule,
@@ -21,7 +23,8 @@ import { httpLoaderFactory } from '../utils/http-loader.factory';
     }),
   ],
   exports: [
-    CardComponent
+    CardComponent,
+    ButtonComponent
   ]
 })
 export class SharedModule { }

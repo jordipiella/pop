@@ -18,6 +18,7 @@ module.exports = {
       'secondary': '#253238',
       'text': '#607D8B',
       'background': '#ECEFF1',
+      'hover': '#0F9989'
      })
   },
   variants: {
