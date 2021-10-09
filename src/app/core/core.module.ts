@@ -4,6 +4,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { httpLoaderFactory } from '../utils/http-loader.factory';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { httpLoaderFactory } from '../utils/http-loader.factory';
         deps: [HttpClient]
       }
     }),
+    AngularSvgIconModule
   ],
   exports: [
     HeaderComponent
