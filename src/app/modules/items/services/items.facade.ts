@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { IQueryParams } from '../../api/interfaces/pagination.interface';
-import { IApiResponse } from '../../api/interfaces/response.interface';
-import { ItemsService } from './items/items.service';
-import { ItemModel } from './items/models/item.model';
+import { getItems, resetStateItems } from '../state/items.actions';
+import { ItemsState } from '../state/items.reducer';
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +10,15 @@ import { ItemModel } from './items/models/item.model';
 export class ItemsFacade {
 
   constructor(
-    private itemsService: ItemsService,
+    private store: Store<ItemsState>
   ) { }
 
-  getAllItems(queryParams?: IQueryParams): Observable<IApiResponse<ItemModel>> {
-    return this.itemsService.getAll(queryParams);
+  getAllItems(queryParams: IQueryParams): void {
+    this.store.dispatch(getItems(queryParams));
+  }
+
+  resetStateItems(): void {
+    this.store.dispatch(resetStateItems());
   }
 
 }

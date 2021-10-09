@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ItemsRoutingModule } from './items-routing.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { ItemsComponent } from './items.component';
 import { httpLoaderFactory } from 'src/app/utils/http-loader.factory';
+import * as fromItems from './state/items.reducer';
+import { ItemsEffects } from './state/items.effects';
+import { ItemsRoutingModule } from './items-routing.module';
 
 
 @NgModule({
@@ -21,6 +25,8 @@ import { httpLoaderFactory } from 'src/app/utils/http-loader.factory';
         deps: [HttpClient]
       }
     }),
+    StoreModule.forFeature(fromItems.itemsFeatureKey, fromItems.reducer),
+    EffectsModule.forFeature([ItemsEffects]),
   ]
 })
 export class ItemsModule { }
