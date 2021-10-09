@@ -7,15 +7,13 @@ import { modalAnimation } from '../animations/animations.constants';
   styleUrls: ['./modal.component.scss'],
   animations: [ modalAnimation ]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
 
   @Input() visible: boolean = false;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
   ) { }
-
-  ngOnInit(): void {}
 
   close() {
     this.visible = false;

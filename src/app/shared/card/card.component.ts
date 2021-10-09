@@ -5,7 +5,7 @@ import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss'],
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
 
   @ContentChild('image', { read: TemplateRef }) image!: TemplateRef<any>;
   @ContentChild('body', { read: TemplateRef }) body!: TemplateRef<any>;
@@ -13,6 +13,5 @@ export class CardComponent implements OnInit {
   constructor(
   ) { }
 
-  ngOnInit(): void {}
 
 }
