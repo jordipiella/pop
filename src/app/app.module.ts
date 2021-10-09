@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { httpLoaderFactory } from './utils/http-loader.factory';
 import { CoreModule } from './core/core.module';
+import { SharedModule } from './shared/shared.module';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { CoreModule } from './core/core.module';
       maxAge: 25,
       logOnly: environment.production
     }),
+    AngularSvgIconModule.forRoot(),
     CoreModule
   ],
   providers: [],
