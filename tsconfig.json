@@ -21,6 +21,7 @@
       "dom"
     ],
     "paths": {
+      "@core": ["src/app/core"],
       "@api": ["src/app/modules/api"]
     }
   },

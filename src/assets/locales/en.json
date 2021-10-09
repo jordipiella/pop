@@ -1,3 +1,6 @@
 {
-  "app-title": "Title Pop"
+  "app-title": "Title Pop",
+  "header": {
+    "title": "POP Items"
+  }
 }
