@@ -1,24 +1,25 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApiModule } from '@api';
+import { of } from 'rxjs';
 import { IApiResponse } from '../../api/interfaces/response.interface';
 import { ItemsFacade } from './items.facade';
-import { ApiItemsService } from '../../api/services/api-items/api-items.service';
-import { ItemContract } from '../../api/services/api-items/contracts/item.contract';
-import { of } from 'rxjs';
-import { itemMockContract } from '../../api/services/api-items/mocks/item-mock.contract';
 import { IQueryParams } from '../../api/interfaces/pagination.interface';
+import { ItemsService } from './items/items.service';
+import { itemMockModel } from './items/mocks/item-mock.model';
+import { ItemModel } from './items/models/item.model';
+
+const itemRes: ItemModel[] = [
+  itemMockModel,
+  itemMockModel,
+  itemMockModel
+];
 
 describe('ItemsService', () => {
   let service: ItemsFacade;
-  const apiItems: jasmine.SpyObj<ApiItemsService> = jasmine.createSpyObj('ApiItemsService', {
+  const itemService: jasmine.SpyObj<ItemsService> = jasmine.createSpyObj('ItemsService', {
     getAll: of({
       total: 5,
-      data: [
-        itemMockContract,
-        itemMockContract,
-        itemMockContract
-      ]
+      data: itemRes
     })
   });
 
@@ -26,11 +27,10 @@ describe('ItemsService', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        ApiModule
       ],
       providers: [
         {
-          provide: ApiItemsService, useValue: apiItems
+          provide: ItemsService, useValue: itemService
         }
       ]
     });
@@ -38,24 +38,24 @@ describe('ItemsService', () => {
   });
 
   describe('#getAllItems()', () => {
-    it('should call apiItems.getAllItems and return a Observable<IApiResponse<ItemContract>> without params', () => {
+    it('should call itemService.getAllItems and return a Observable<IApiResponse<ItemModel>> without params', () => {
       service.getAllItems()
-        .subscribe((res: IApiResponse<ItemContract>) => {
-          expect(res.data).toEqual([itemMockContract, itemMockContract, itemMockContract]);
+        .subscribe((res: IApiResponse<ItemModel>) => {
+          expect(res.data).toEqual(itemRes);
         });
-      expect(apiItems.getAll).toHaveBeenCalled();
+      expect(itemService.getAll).toHaveBeenCalled();
     });
 
-    it('should call apiItems.getAllItems and return a Observable<IApiResponse<ItemContract>> with params', () => {
+    it('should call itemService.getAllItems and return a Observable<IApiResponse<ItemModel>> with params', () => {
       const params: IQueryParams = {
         _limit: 3,
         _page: 0
       }
       service.getAllItems(params)
-        .subscribe((res: IApiResponse<ItemContract>) => {
-          expect(res.data).toEqual([itemMockContract, itemMockContract, itemMockContract]);
+        .subscribe((res: IApiResponse<ItemModel>) => {
+          expect(res.data).toEqual(itemRes);
         });
-      expect(apiItems.getAll).toHaveBeenCalledWith(params);
+      expect(itemService.getAll).toHaveBeenCalledWith(params);
     });
   });
 });
