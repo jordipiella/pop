@@ -48,10 +48,6 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   ngOnDestroy(): void {
-    this.options.map((option: any) => {
-      delete option.disabled;
-      return option;
-    });
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
   }
 

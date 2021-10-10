@@ -6,4 +6,6 @@ export interface IQueryParams {
   description_like?: string;
   price_like?: string;
   email_like?: string;
+  _sort?: string;
+  _order?: string;
 }

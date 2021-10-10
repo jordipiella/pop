@@ -5,7 +5,8 @@ import { IQueryParams } from '../api/interfaces/pagination.interface';
 import { Observable, Subscription } from 'rxjs';
 import { IApiResponse } from '../api/interfaces/response.interface';
 import { tap } from 'rxjs/operators';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { OrderEnum } from '../api/enums/order.enum';
 
 
 @Component({
@@ -22,9 +23,10 @@ export class ItemsComponent implements OnInit, OnDestroy {
   queryParams: IQueryParams = { _limit: 5, _page: 0 };
   loading: Observable<boolean> = this.itemsFacade.loading$;
   options = [
-    { label: 'name', value: 'name' },
-    { label: 'desc', value: 'desc' },
-    { label: 'price', value: 'price' }
+    { label: 'Title', value: 'title' },
+    { label: 'Description', value: 'description' },
+    { label: 'Price', value: 'price' },
+    { label: 'Email', value: 'email' }
   ];
   sortForm: FormControl = this.fb.control('st');
 
@@ -34,16 +36,43 @@ export class ItemsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.sortForm.valueChanges.pipe(
-      tap(x => console.log('ii', x))
-    ).subscribe();
     this.itemsSub();
     this.totalSub();
+    this.sortSub();
     this.getAllItems(this.queryParams);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((x: Subscription) => x.unsubscribe());
+  }
+
+  sortSub(): void {
+    const sortSub: Subscription = this.sortForm.valueChanges
+      .pipe(
+        tap((value: string) => this.setSort(value)),
+        tap(() => this.resetList()),
+        tap(() => this.getAllItems(this.queryParams))
+      ).subscribe();
+    this.subscriptions.push(sortSub);
+  }
+
+  setSort(value: string): void {
+    if (!value || value === null) {
+      this.removeSort();
+      return;
+    }
+    this.queryParams._sort = value;
+    this.queryParams._order = OrderEnum.asc;
+  }
+
+  removeSort(): void {
+    delete this.queryParams._order;
+    delete this.queryParams._sort;
+  }
+
+  resetList(): void {
+    this.itemsFacade.resetStateItems();
+    this.items = [];
   }
 
   itemsSub(): void {
