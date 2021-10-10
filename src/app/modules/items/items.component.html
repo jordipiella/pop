@@ -2,33 +2,57 @@
   <ng-container *ngFor="let item of items">
     <div class="p-2">
       <app-card>
-        <ng-template #image>
-          <div class="overflow-hidden h-40">
-            <img class="rounded-t-lg w-full" [src]="item.image" alt="" />
-          </div>
-        </ng-template>
-        <ng-template #body>
-          <div class="flex items-center justify-items-end flex-row-reverse px-4 py-1">
-            <span class="inline-flex items-center justify-items-end px-4 py-1 leading-none text-red-100 bg-red-600 rounded-full">
-              {{ item.price }}
-              <svg-icon src="./assets/svg/euro.svg" class="ml-1 w-4"></svg-icon>
-            </span>
-
-          </div>
-          <div class="pb-6 pt-2 px-4 rounded-lg bg-white">
-            <h1 class="line-clamp-2 h-16">{{ item.title }}</h1>
-            <p class="line-clamp-3">
-              {{ item.description }}
-            </p>
-          </div>
-          <div class="py-2 px-4 border-t text-xs text-gray-700">
-            <p class="text-xs flex items-center">
-              <svg-icon src="./assets/svg/mail.svg" class="mr-1 w-4"></svg-icon>
-              {{ item.email }}
-              </p>
-          </div>
-        </ng-template>
+        <ng-container image *ngTemplateOutlet="image; context:{ $implicit: item }">
+        </ng-container>
+        <ng-container body *ngTemplateOutlet="body; context:{ $implicit: item }">
+        </ng-container>
       </app-card>
     </div>
   </ng-container>
 </app-grid>
+
+
+<ng-template #image let-item>
+  <div *ngIf="item?.image" class="overflow-hidden h-40">
+    <img class="rounded-t-lg w-full" [src]="item.image" alt="" />
+  </div>
+</ng-template>
+
+<ng-template #body let-item>
+  <ng-container
+    *ngTemplateOutlet="subImage; context:{ $implicit: item }">
+  </ng-container>
+  <ng-container
+    *ngTemplateOutlet="content; context:{ $implicit: item }">
+  </ng-container>
+  <ng-container
+    *ngTemplateOutlet="footer; context:{ $implicit: item }">
+  </ng-container>
+</ng-template>
+
+<ng-template #content let-item>
+  <div class="pb-6 pt-2 px-4 rounded-lg bg-white">
+    <h1 class="line-clamp-2 h-16">{{ item.title }}</h1>
+    <p class="line-clamp-3">
+      {{ item.description }}
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #subImage let-item>
+  <div class="flex items-center justify-items-end flex-row-reverse px-4 py-1">
+    <app-badge>
+      {{ item.price }}
+      <svg-icon src="./assets/svg/euro.svg" class="ml-1 w-4"></svg-icon>
+    </app-badge>
+  </div>
+</ng-template>
+
+<ng-template #footer let-item>
+  <div class="py-2 px-4 border-t text-xs text-gray-700">
+    <p class="text-xs flex items-center">
+      <svg-icon src="./assets/svg/mail.svg" class="mr-1 w-4"></svg-icon>
+      {{ item.email }}
+      </p>
+  </div>
+</ng-template>
