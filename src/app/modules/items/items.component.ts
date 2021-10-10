@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemModel } from './services/items/models/item.model';
 import { ItemsFacade } from './services/items.facade';
-import { debounceTime, take, tap } from 'rxjs/operators';
 import { IQueryParams } from '../api/interfaces/pagination.interface';
 import { Subscription } from 'rxjs';
+import { IApiResponse } from '../api/interfaces/response.interface';
+import { tap } from 'rxjs/operators';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { Subscription } from 'rxjs';
 export class ItemsComponent implements OnInit, OnDestroy {
 
   items: ItemModel[] = [];
+  itemsPag: IApiResponse<ItemModel> = { total: 0, data: [] };
   subscriptions: Subscription[] = [];
 
   constructor(
@@ -22,7 +24,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.itemsSub();
-    this.getAllItems({ _limit: 5, _page: 0 });
+    this.getAllItems({ _limit: 20, _page: 0 });
   }
 
   ngOnDestroy(): void {
@@ -32,6 +34,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   itemsSub(): void {
     const itemsSubs: Subscription = this.itemsFacade.items$
       .pipe(
+        tap((items: ItemModel[]) => this.items = items)
       ).subscribe();
     this.subscriptions.push(itemsSubs);
   }

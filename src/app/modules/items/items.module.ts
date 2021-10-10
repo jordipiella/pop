@@ -9,6 +9,8 @@ import { httpLoaderFactory } from 'src/app/utils/http-loader.factory';
 import * as fromItems from './state/items.reducer';
 import { ItemsEffects } from './state/items.effects';
 import { ItemsRoutingModule } from './items-routing.module';
+import { SharedModule } from '../../shared/shared.module';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 
 @NgModule({
@@ -27,6 +29,8 @@ import { ItemsRoutingModule } from './items-routing.module';
     }),
     StoreModule.forFeature(fromItems.itemsFeatureKey, fromItems.reducer),
     EffectsModule.forFeature([ItemsEffects]),
+    SharedModule,
+    AngularSvgIconModule
   ]
 })
 export class ItemsModule { }

@@ -28,6 +28,7 @@
     "@ngrx/store-devtools": "^12.4.0",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
+    "@tailwindcss/line-clamp": "^0.2.2",
     "angular-svg-icon": "^12.0.0",
     "autoprefixer": "^10.3.7",
     "classlist.js": "^1.1.20150312",
