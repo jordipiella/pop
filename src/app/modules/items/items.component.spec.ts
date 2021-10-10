@@ -8,6 +8,7 @@ import { ItemsComponent } from './items.component';
 import { ItemsFacade } from './services/items.facade';
 import { itemMockModel } from './services/items/mocks/item-mock.model';
 import { ItemModel } from './services/items/models/item.model';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 const initialState: unknown = {
   data: [],
@@ -15,6 +16,7 @@ const initialState: unknown = {
   loading: false,
   error: null
 };
+const fb: FormBuilder = new FormBuilder();
 
 describe('ItemsComponent', () => {
   let component: ItemsComponent;
@@ -33,6 +35,8 @@ describe('ItemsComponent', () => {
       ],
       providers: [
         TranslateService,
+        ReactiveFormsModule,
+        FormBuilder,
         provideMockStore({ initialState: { items: initialState }})
       ]
     }).compileComponents();
@@ -41,17 +45,21 @@ describe('ItemsComponent', () => {
     itemsFacade = TestBed.inject(ItemsFacade);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    component.sortForm = fb.control('');
   }));
 
   describe('#ngOnInit', () => {
-    it('should call loadingSubscription, getMovieId and getMovie', () => {
+    it('should call itemsSub, totalSub, sortSub, getAllItems', () => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      component.queryParams = queryParams;
       spyOn(component, 'itemsSub');
       spyOn(component, 'totalSub');
+      spyOn(component, 'sortSub');
       spyOn(component, 'getAllItems');
-      const queryParams: IQueryParams = { _limit: 5, _page: 0 };
       component.ngOnInit();
       expect(component.itemsSub).toHaveBeenCalled();
       expect(component.totalSub).toHaveBeenCalled();
+      expect(component.sortSub).toHaveBeenCalled();
       expect(component.getAllItems).toHaveBeenCalledOnceWith(queryParams);
     });
   });
@@ -62,6 +70,60 @@ describe('ItemsComponent', () => {
       spyOn(component.subscriptions[0], 'unsubscribe');
       component.ngOnDestroy();
       expect(component.subscriptions[0].unsubscribe).toHaveBeenCalled();
+    });
+  });
+
+  describe('#sortSub', () => {
+    it('should call setSort, resetList, getAllItems and push subscription to subscriptions[]', () => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      spyOn(component, 'setSort');
+      spyOn(component, 'resetList');
+      spyOn(component, 'getAllItems');
+      spyOn(component.subscriptions, 'push');
+      component.sortSub();
+      component.sortForm.setValue('name');
+      expect(component.setSort).toHaveBeenCalledWith('name');
+      expect(component.resetList).toHaveBeenCalled();
+      expect(component.getAllItems).toHaveBeenCalledWith(queryParams);
+      expect(component.subscriptions.push).toHaveBeenCalled();
+    });
+  });
+
+  describe('#setSort', () => {
+    it('should set _sort and default order asc', () => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1, _sort: 'title', _order: 'asc' };
+      component.queryParams = queryParams;
+      spyOn(component, 'removeSort');
+      component.setSort('title');
+      expect(component.removeSort).not.toHaveBeenCalled();
+      expect(component.queryParams).toEqual(queryParamsRes);
+    });
+    it('should call removeSort if value is null', () => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      spyOn(component, 'removeSort');
+      component.setSort('');
+      expect(component.removeSort).toHaveBeenCalled();
+    });
+  });
+
+  describe('#removeSort', () => {
+    it('should remove sort From queryParams', () => {
+      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1 };
+      const queryParams: IQueryParams = { _limit: 5, _page: 1, _sort: 'title', _order: 'asc' };
+      component.queryParams = queryParams;
+      component.removeSort();
+      expect(component.queryParams).toEqual(queryParamsRes);
+    });
+  });
+
+  describe('#resetList', () => {
+    it('should ', () => {
+      component.items = [ itemMockModel ];
+      spyOn(itemsFacade, 'resetStateItems');
+      component.resetList();
+      expect(component.items).toEqual([]);
+      expect(itemsFacade.resetStateItems).toHaveBeenCalled();
     });
   });
 

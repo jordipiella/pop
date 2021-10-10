@@ -20,7 +20,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   itemsPag: IApiResponse<ItemModel> = { total: 0, data: [] };
   total: number = 0;
   subscriptions: Subscription[] = [];
-  queryParams: IQueryParams = { _limit: 5, _page: 0 };
+  queryParams: IQueryParams = { _limit: 5, _page: 1 };
   loading: Observable<boolean> = this.itemsFacade.loading$;
   options = [
     { label: 'Title', value: 'title' },
