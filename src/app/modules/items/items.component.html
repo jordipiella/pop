@@ -3,7 +3,15 @@
   [options]="options"
   emptyOption="Sort by">
 </app-dropdown>
-
+<div class="shadow flex">
+  <input class="w-full rounded p-2" [formControl]="searchForm" type="text" placeholder="Search...">
+  <button *ngIf="searchForm.value" (click)="cleanSearch()" class="bg-white w-auto flex justify-end items-center text-primary p-2">
+    <svg-icon src="./assets/svg/close.svg" class="mr-1 w-4"></svg-icon>
+  </button>
+  <button class="bg-white w-auto flex justify-end items-center text-primary p-2">
+    <svg-icon src="./assets/svg/search.svg" class="mr-1 w-4"></svg-icon>
+  </button>
+</div>
 <app-grid>
   <ng-container *ngFor="let item of items">
     <div class="p-2">

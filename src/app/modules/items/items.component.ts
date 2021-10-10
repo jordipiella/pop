@@ -4,7 +4,7 @@ import { ItemsFacade } from './services/items.facade';
 import { IQueryParams } from '../api/interfaces/pagination.interface';
 import { Observable, Subscription } from 'rxjs';
 import { IApiResponse } from '../api/interfaces/response.interface';
-import { tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { OrderEnum } from '../api/enums/order.enum';
 
@@ -28,7 +28,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
     { label: 'Price', value: 'price' },
     { label: 'Email', value: 'email' }
   ];
-  sortForm: FormControl = this.fb.control('st');
+  sortForm: FormControl = this.fb.control('');
+  searchForm: FormControl = this.fb.control('');
 
   constructor(
     private itemsFacade: ItemsFacade,
@@ -39,11 +40,38 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.itemsSub();
     this.totalSub();
     this.sortSub();
+    this.searchSub();
     this.getAllItems(this.queryParams);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((x: Subscription) => x.unsubscribe());
+  }
+
+  searchSub(): void {
+    const searchSub: Subscription = this.searchForm.valueChanges
+      .pipe(
+        filter((value: string) => value.length > 2 || !value),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((value: string) => this.setSearch(value)),
+        tap(() => this.resetList()),
+        tap(() => this.getAllItems(this.queryParams))
+      ).subscribe();
+    this.subscriptions.push(searchSub);
+  }
+
+  setSearch(value: string): void {
+    console.log(value)
+    if (!value) {
+      delete this.queryParams.q;
+      return;
+    }
+    this.queryParams.q = value;
+  }
+
+  cleanSearch(): void {
+    this.searchForm.setValue('');
   }
 
   sortSub(): void {
