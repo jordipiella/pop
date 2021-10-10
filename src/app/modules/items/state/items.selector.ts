@@ -5,7 +5,7 @@ const selectItemsState = createFeatureSelector<ItemsState>(itemsFeatureKey);
 
 export const selectItems = createSelector(
   selectItemsState,
-    state => state.data
+  state => state.data
 );
 
 export const selectTotal = createSelector(

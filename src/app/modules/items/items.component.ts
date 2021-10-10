@@ -27,7 +27,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.itemsSub();
-    this.totalSubscription();
+    this.totalSub();
     this.getAllItems(this.queryParams);
   }
 
@@ -38,12 +38,16 @@ export class ItemsComponent implements OnInit, OnDestroy {
   itemsSub(): void {
     const itemsSubs: Subscription = this.itemsFacade.items$
       .pipe(
-        tap((items: ItemModel[]) => this.items = [...this.items, ...items])
+        tap((items: ItemModel[]) => this.setItems(items))
       ).subscribe();
     this.subscriptions.push(itemsSubs);
   }
 
-  totalSubscription(): void {
+  setItems(items: ItemModel[] | null): void {
+    this.items = items?.length ? [...this.items, ...items] : this.items;
+  }
+
+  totalSub(): void {
     const totalSub: Subscription = this.itemsFacade.total$
       .pipe(
         tap((total: number) => this.setTotal(total))
@@ -51,7 +55,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(totalSub);
   }
 
-  setTotal(total: number): void {
+  setTotal(total: number | null): void {
     this.total = (total) ? total : 0;
   }
 
