@@ -7,7 +7,7 @@ import { httpLoaderFactory } from '../utils/http-loader.factory';
 import { ButtonComponent } from './button/button.component';
 import { GridComponent } from './grid/grid.component';
 import { BadgeComponent } from './badge/badge.component';
-import { DropDownComponent } from './sort/dropdown.component';
+import { DropDownComponent } from './dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 
