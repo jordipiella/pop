@@ -1,3 +1,9 @@
+<app-dropdown
+  [formControl]="sortForm"
+  [options]="options"
+  emptyOption="Sort by">
+</app-dropdown>
+
 <app-grid>
   <ng-container *ngFor="let item of items">
     <div class="p-2">

@@ -11,6 +11,7 @@ import { ItemsEffects } from './state/items.effects';
 import { ItemsRoutingModule } from './items-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     StoreModule.forFeature(fromItems.itemsFeatureKey, fromItems.reducer),
     EffectsModule.forFeature([ItemsEffects]),
     SharedModule,
-    AngularSvgIconModule
+    AngularSvgIconModule,
+    ReactiveFormsModule
   ]
 })
 export class ItemsModule { }

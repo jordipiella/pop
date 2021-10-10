@@ -5,6 +5,7 @@ import { IQueryParams } from '../api/interfaces/pagination.interface';
 import { Observable, Subscription } from 'rxjs';
 import { IApiResponse } from '../api/interfaces/response.interface';
 import { tap } from 'rxjs/operators';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -20,12 +21,22 @@ export class ItemsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   queryParams: IQueryParams = { _limit: 5, _page: 0 };
   loading: Observable<boolean> = this.itemsFacade.loading$;
+  options = [
+    { label: 'name', value: 'name' },
+    { label: 'desc', value: 'desc' },
+    { label: 'price', value: 'price' }
+  ];
+  sortForm: FormControl = this.fb.control('st');
 
   constructor(
-    private itemsFacade: ItemsFacade
+    private itemsFacade: ItemsFacade,
+    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
+    this.sortForm.valueChanges.pipe(
+      tap(x => console.log('ii', x))
+    ).subscribe();
     this.itemsSub();
     this.totalSub();
     this.getAllItems(this.queryParams);
