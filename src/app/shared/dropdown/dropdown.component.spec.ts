@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DropDownComponent } from './dropdown.component';
 
-describe('SortComponent', () => {
+describe('DropDownComponent', () => {
   let component: DropDownComponent;
   let fixture: ComponentFixture<DropDownComponent>;
 
@@ -19,7 +19,4 @@ describe('SortComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 });
