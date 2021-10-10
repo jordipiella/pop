@@ -7,6 +7,8 @@ import { httpLoaderFactory } from '../utils/http-loader.factory';
 import { ButtonComponent } from './button/button.component';
 import { GridComponent } from './grid/grid.component';
 import { BadgeComponent } from './badge/badge.component';
+import { DropDownComponent } from './sort/dropdown.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +16,8 @@ import { BadgeComponent } from './badge/badge.component';
     CardComponent,
     ButtonComponent,
     GridComponent,
-    BadgeComponent
+    BadgeComponent,
+    DropDownComponent
   ],
   imports: [
     CommonModule,
@@ -25,12 +28,14 @@ import { BadgeComponent } from './badge/badge.component';
         deps: [HttpClient]
       }
     }),
+    ReactiveFormsModule
   ],
   exports: [
     CardComponent,
     ButtonComponent,
     GridComponent,
-    BadgeComponent
+    BadgeComponent,
+    DropDownComponent
   ]
 })
 export class SharedModule { }
