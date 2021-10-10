@@ -9,6 +9,8 @@ import { GridComponent } from './grid/grid.component';
 import { BadgeComponent } from './badge/badge.component';
 import { DropDownComponent } from './dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SearchComponent } from './search/search.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 
 @NgModule({
@@ -17,7 +19,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ButtonComponent,
     GridComponent,
     BadgeComponent,
-    DropDownComponent
+    DropDownComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -28,14 +31,16 @@ import { ReactiveFormsModule } from '@angular/forms';
         deps: [HttpClient]
       }
     }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularSvgIconModule
   ],
   exports: [
     CardComponent,
     ButtonComponent,
     GridComponent,
     BadgeComponent,
-    DropDownComponent
+    DropDownComponent,
+    SearchComponent
   ]
 })
 export class SharedModule { }

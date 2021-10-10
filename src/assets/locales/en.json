@@ -4,6 +4,7 @@
     "title": "POP Items"
   },
   "actions": {
-    "load-more": "Load more"
+    "load-more": "Load more",
+    "search": "Search..."
   }
 }
