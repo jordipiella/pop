@@ -11,6 +11,12 @@
   </ng-container>
 </app-grid>
 
+<div class="text-center">
+  <app-button *ngIf="total !== items.length" (click)="loadMore()">
+    <svg-icon *ngIf="loading | async" src="./assets/svg/animate-spin.svg" class="mr-1 w-4"></svg-icon>
+    {{ 'actions.load-more' | translate }}
+  </app-button>
+</div>
 
 <ng-template #image let-item>
   <div *ngIf="item?.image" class="overflow-hidden h-40">

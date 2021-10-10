@@ -7,14 +7,14 @@ export const itemsFeatureKey: string = 'items';
 
 export interface ItemsState {
     data: ItemModel[];
-    total: number | null,
+    total: number,
     loading: boolean;
     error: HttpErrorResponse | null;
 }
 
 const initialState: ItemsState = {
     data: [],
-    total: null,
+    total: 0,
     loading: false,
     error: null
 };
@@ -31,7 +31,7 @@ export const reducer = createReducer(
         return {
             ...state,
             data: [...action.data],
-            total: action.total,
+            total: action.total ? action.total : 0,
             loading: false
         };
     }),

@@ -2,5 +2,8 @@
   "app-title": "Title Pop",
   "header": {
     "title": "POP Items"
+  },
+  "actions": {
+    "load-more": "Load more"
   }
 }
