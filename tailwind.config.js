@@ -12,7 +12,7 @@ module.exports = {
         'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
       }
     },
-    backgroundColor: theme => ({
+    backgroundColor: (theme) => ({
       ...theme('colors'),
       'primary': '#13c1ac',
       'secondary': '#253238',
@@ -24,5 +24,7 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+  ]
 }

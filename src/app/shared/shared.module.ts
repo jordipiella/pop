@@ -6,13 +6,21 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { httpLoaderFactory } from '../utils/http-loader.factory';
 import { ButtonComponent } from './button/button.component';
 import { GridComponent } from './grid/grid.component';
+import { BadgeComponent } from './badge/badge.component';
+import { DropDownComponent } from './dropdown/dropdown.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SearchComponent } from './search/search.component';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 
 
 @NgModule({
   declarations: [
     CardComponent,
     ButtonComponent,
-    GridComponent
+    GridComponent,
+    BadgeComponent,
+    DropDownComponent,
+    SearchComponent
   ],
   imports: [
     CommonModule,
@@ -23,11 +31,16 @@ import { GridComponent } from './grid/grid.component';
         deps: [HttpClient]
       }
     }),
+    ReactiveFormsModule,
+    AngularSvgIconModule
   ],
   exports: [
     CardComponent,
     ButtonComponent,
-    GridComponent
+    GridComponent,
+    BadgeComponent,
+    DropDownComponent,
+    SearchComponent
   ]
 })
 export class SharedModule { }

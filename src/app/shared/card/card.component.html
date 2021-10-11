@@ -1,8 +1,8 @@
 
 <div class="bg-white relative shadow-lg hover:shadow-xl transition duration-500 rounded-lg">
-  <ng-container *ngTemplateOutlet="image"></ng-container>
+  <ng-content select="[image]"></ng-content>
   <div class="p-1 rounded-lg bg-white">
-    <ng-container *ngTemplateOutlet="body"></ng-container>
+    <ng-content select="[body]"></ng-content>
   </div>
 </div>
 

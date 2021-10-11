@@ -134,9 +134,21 @@
               "devServerTarget": "pop:serve:production"
             }
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "pop"
+  "defaultProject": "pop",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
