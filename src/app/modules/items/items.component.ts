@@ -70,10 +70,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.queryParams.q = value;
   }
 
-  cleanSearch(): void {
-    this.searchForm.setValue('');
-  }
-
   sortSub(): void {
     const sortSub: Subscription = this.sortForm.valueChanges
       .pipe(

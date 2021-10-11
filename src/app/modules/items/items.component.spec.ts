@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -55,11 +55,13 @@ describe('ItemsComponent', () => {
       spyOn(component, 'itemsSub');
       spyOn(component, 'totalSub');
       spyOn(component, 'sortSub');
+      spyOn(component, 'searchSub');
       spyOn(component, 'getAllItems');
       component.ngOnInit();
       expect(component.itemsSub).toHaveBeenCalled();
       expect(component.totalSub).toHaveBeenCalled();
       expect(component.sortSub).toHaveBeenCalled();
+      expect(component.searchSub).toHaveBeenCalled();
       expect(component.getAllItems).toHaveBeenCalledOnceWith(queryParams);
     });
   });
@@ -70,6 +72,41 @@ describe('ItemsComponent', () => {
       spyOn(component.subscriptions[0], 'unsubscribe');
       component.ngOnDestroy();
       expect(component.subscriptions[0].unsubscribe).toHaveBeenCalled();
+    });
+  });
+
+  describe('#searchSub', () => {
+    it('should call setSearch, resetList and getAllItems', fakeAsync(() => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      component.queryParams = queryParams
+      spyOn(component, 'setSearch');
+      spyOn(component, 'resetList');
+      spyOn(component, 'getAllItems');
+      spyOn(component.subscriptions, 'push');
+      component.searchSub();
+      component.searchForm.setValue('newSearch');
+      tick(600);
+      expect(component.setSearch).toHaveBeenCalledWith('newSearch');
+      expect(component.resetList).toHaveBeenCalled();
+      expect(component.getAllItems).toHaveBeenCalledWith(queryParams);
+      expect(component.subscriptions.push).toHaveBeenCalled();
+    }));
+  });
+
+  describe('#setSearch', () => {
+    it('should set q to query params', () => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1, q: 'value' };
+      component.queryParams = queryParams;
+      component.setSearch('value');
+      expect(component.queryParams).toEqual(queryParamsRes);
+    });
+    it('should remove q to query params', () => {
+      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1 };
+      const queryParams: IQueryParams = { _limit: 5, _page: 1, q: 'value' };
+      component.queryParams = queryParams;
+      component.setSearch('');
+      expect(component.queryParams).toEqual(queryParamsRes);
     });
   });
 
