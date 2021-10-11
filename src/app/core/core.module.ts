@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { httpLoaderFactory } from '../utils/http-loader.factory';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -24,6 +25,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
   ],
   exports: [
     HeaderComponent,
+    ModalComponent
   ]
 })
 export class CoreModule { }
