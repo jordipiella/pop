@@ -62,7 +62,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   setSearch(value: string): void {
-    console.log(value)
     if (!value) {
       delete this.queryParams.q;
       return;

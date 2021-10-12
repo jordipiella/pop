@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ModalComponent } from './modal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MockComponent } from '../mocks/mock-component';
 
 describe('ModalComponent', () => {
   let component: ModalComponent;
@@ -12,7 +13,8 @@ describe('ModalComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        ModalComponent
+        ModalComponent,
+        MockComponent({ selector: 'svg-icon', inputs: ['svgStyle']})
       ],
       imports: [
         TranslateModule.forRoot(),
