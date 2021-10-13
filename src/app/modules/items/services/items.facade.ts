@@ -6,6 +6,7 @@ import { ItemsState } from '../state/items.reducer';
 import { ItemModel } from './items/models/item.model';
 import { selectItems, selectTotal, selectLoading } from '../state/items.selector';
 import { Observable } from 'rxjs';
+import { AppFacade } from '../../../core/services/app.facade';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ItemsFacade {
   loading$: Observable<boolean> = this.store.pipe(select(selectLoading));
 
   constructor(
-    private store: Store<ItemsState>
+    private store: Store<ItemsState>,
+    private appFacade: AppFacade
   ) { }
 
   getAllItems(queryParams: IQueryParams): void {
@@ -26,6 +28,10 @@ export class ItemsFacade {
 
   resetStateItems(): void {
     this.store.dispatch(resetStateItems());
+  }
+
+  addToFavorite(item: ItemModel): void {
+    this.appFacade.addFavorite(item);
   }
 
 }

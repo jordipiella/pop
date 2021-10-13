@@ -63,9 +63,9 @@
 
 <ng-template #footer let-item>
   <div class="py-2 px-4 border-t text-xs text-gray-700">
-    <p class="text-xs flex items-center">
-      <svg-icon src="./assets/svg/mail.svg" class="mr-1 w-4"></svg-icon>
-      {{ item.email }}
+    <p class="text-xs flex">
+      <svg-icon src="./assets/svg/mail.svg" class="mr-4 w-4"></svg-icon>
+      <svg-icon (click)="addToFavorite(item)" src="./assets/svg/star.svg" class="mr-1 w-4 hover:text-primary cursor-pointer"></svg-icon>
       </p>
   </div>
 </ng-template>

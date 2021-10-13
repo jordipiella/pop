@@ -132,4 +132,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.getAllItems(this.queryParams);
     }
   }
+
+  addToFavorite(item: ItemModel): void {
+    this.itemsFacade.addToFavorite(item);
+  }
 }
