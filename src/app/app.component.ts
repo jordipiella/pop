@@ -44,6 +44,10 @@ export class AppComponent implements OnInit {
     const { FavoritesModule } = await import('./modules/favorites/favorites.module');
     this.module = await this.compiler.compileModuleAsync(FavoritesModule);
     const elementModuleRef = this.module.create(this.injector);
+    if (this.modalService.component?.instance?.visible) {
+      this.modalService.component.instance.visible = true;
+      return;
+    }
     this.modalService.openModal(this.modal, FavoritesComponent);
   }
 
