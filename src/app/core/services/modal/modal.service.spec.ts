@@ -7,20 +7,34 @@ import { of } from 'rxjs';
 
 const component: any = { component: 'component'};
 class CompRefMock {
+  _visible: boolean = true;
+
   get instance() {
     return {
       afterViewInit : this.afterViewInit,
-      clickClose : this.clickClose
+      clickClose : this.clickClose,
+      visible: false
     };
   }
+
   get afterViewInit() {
     return of(true);
   }
+
   get content() {
     return 'content';
   }
+
   get clickClose() {
     return of(true);
+  }
+
+  set visible(value: boolean) {
+    this._visible = value;
+  }
+
+  get visible() {
+    return this._visible;
   }
 }
 
@@ -53,13 +67,13 @@ describe('ModalService', () => {
       await service['loadComponent'](ref, component);
       expect(service['loadModalComponent']).toHaveBeenCalledWith(ref);
       expect(service['afterViewInitSub']).toHaveBeenCalledWith(compRef, component);
-      expect(service['clickCloseSub']).toHaveBeenCalledWith(compRef, ref);
+      expect(service['clickCloseSub']).toHaveBeenCalledWith(compRef);
     });
   })
 
   describe('#loadModalComponent()', () => {
     it('should call createComponent', async () => {
-      const { ModalComponent } = await import('../../modal/modal.component');
+      const { ModalComponent } = await import('../../../shared/modal/modal.component');
       const ref: ViewContainerRef = new ViewContainerRefMock();
       const compRef: ComponentRefMock<any> = new ComponentRefMock();
       spyOn<any>(service, 'createComponent').and.returnValue(of(compRef).toPromise());
@@ -92,20 +106,18 @@ describe('ModalService', () => {
 
   describe('#clickCloseSub()', () => {
     it('shouldcall service.closeModal', () => {
-      const ref: ViewContainerRef = new ViewContainerRefMock();
       const compRef: any = new CompRefMock();
       spyOn(service, 'closeModal');
-      service['clickCloseSub'](compRef, ref);
-      expect(service['closeModal']).toHaveBeenCalledWith(ref);
+      service['clickCloseSub'](compRef);
+      expect(service['closeModal']).toHaveBeenCalledWith(compRef);
     });
   })
 
   describe('#closeModal()', () => {
-    it('should call ref.remove', () => {
-      const ref: ViewContainerRef = new ViewContainerRefMock();
-      spyOn(ref, 'remove');
-      service.closeModal(ref);
-      expect(ref.remove).toHaveBeenCalledWith();
+    it('should set compRef.instance.visible to false', () => {
+      const compRef: any = new CompRefMock();
+      service.closeModal(compRef);
+      expect(compRef.instance.visible).toEqual(false);
     });
   })
 });

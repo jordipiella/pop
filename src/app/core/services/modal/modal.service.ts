@@ -1,10 +1,13 @@
-import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
+import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef, Component } from '@angular/core';
 import { filter, take, tap } from 'rxjs/operators';
+import { ModalComponent } from '../../../shared/modal/modal.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
+
+  component: ComponentRef<ModalComponent> | undefined;
 
   constructor(
     private factoryResolver: ComponentFactoryResolver
@@ -21,8 +24,9 @@ export class ModalService {
   */
   private async loadComponent(ref: ViewContainerRef, component: any): Promise<void> {
     const modalCompRef: ComponentRef<any> = await this.loadModalComponent(ref);
+    this.component = modalCompRef;
     this.afterViewInitSub(modalCompRef, component);
-    this.clickCloseSub(modalCompRef, ref);
+    this.clickCloseSub(modalCompRef);
   }
 
   /**
@@ -31,7 +35,7 @@ export class ModalService {
    * @returns
    */
   private async loadModalComponent(ref: ViewContainerRef): Promise<ComponentRef<any>> {
-    const { ModalComponent } = await import('../../modal/modal.component');
+    const { ModalComponent } = await import('../../../shared/modal/modal.component');
     const componentRef: ComponentRef<any> = this.createComponent(ref, ModalComponent);
     return componentRef;
   }
@@ -60,10 +64,10 @@ export class ModalService {
    * @param compRef ComponentRef<any>
    * @param ref ViewContainerRef
    */
-  private clickCloseSub(compRef: ComponentRef<any>, ref: ViewContainerRef): void {
+  private clickCloseSub(compRef: ComponentRef<any>): void {
     compRef.instance.clickClose
       .pipe(
-        tap(() => this.closeModal(ref)),
+        tap(() => this.closeModal(compRef)),
         take(1)
       ).subscribe();
   }
@@ -72,8 +76,8 @@ export class ModalService {
    * Method to close Modal
    * @param ref ViewContainerRef
    */
-  closeModal(ref: ViewContainerRef): void {
-    ref.remove();
+  closeModal(compRef: ComponentRef<any>): void {
+    compRef.instance.visible = false;
   }
 
 }
