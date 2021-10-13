@@ -12,3 +12,5 @@
   </ng-container>
 </app-grid>
 
+<p *ngIf="!favorites?.length" class="text-center p-3 text-bold">{{ 'favorites.not-found' | translate }}</p>
+

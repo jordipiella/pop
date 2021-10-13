@@ -8,6 +8,7 @@
     "search": "Search..."
   },
   "favorites": {
-    "title": "Favorites"
+    "title": "Favorites",
+    "not-found": "Not found"
   }
 }
