@@ -7,6 +7,10 @@ module.exports = {
     content: ['./src/**/*.{html,ts}']
   },
   theme: {
+    textColor: (theme) => ({
+      ...theme('colors'),
+      'primary': '#13c1ac'
+    }),
     extend: {
       fontFamily: {
         'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
