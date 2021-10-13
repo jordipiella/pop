@@ -20,33 +20,28 @@ export const reducer = createReducer(
         };
     }),
     on(favoritesAction.getFavoritesSuccess, (state, action) => {
-      debugger
         return {
             ...state,
             data: [...action.data],
         };
     }),
     on(favoritesAction.addFavorite, (state, action) => {
-      debugger
         return {
             ...state,
         };
     }),
     on(favoritesAction.addFavoriteSuccess, (state, action) => {
-      debugger
         return {
             ...state,
             data: [...action.data]
         };
     }),
     on(favoritesAction.removeFavorite, (state, action) => {
-      debugger
       return {
         ...state,
       };
     }),
     on(favoritesAction.removeFavoriteSuccess, (state, action) => {
-      debugger
       return {
         ...state,
         data: [...action.data]
