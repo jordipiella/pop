@@ -33,7 +33,8 @@ describe('ItemsComponent', () => {
         MockComponent({ selector: 'app-search', inputs:[ 'formControl', 'placeholder'] }),
         MockComponent({ selector: 'app-grid' }),
         MockComponent({ selector: 'app-button' }),
-        MockComponent({ selector: 'app-badge' })
+        MockComponent({ selector: 'app-badge' }),
+        MockComponent({ selector: 'svg-icon' })
       ],
       imports: [
         TranslateModule.forRoot(),

@@ -13,7 +13,8 @@ describe('FavoritesCardComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         FavoriteCardComponent,
-        MockComponent({ selector: 'app-card' })
+        MockComponent({ selector: 'app-card' }),
+        MockComponent({ selector: 'svg-icon' })
       ],
       imports: [
         HttpClientTestingModule
