@@ -1,44 +1,14 @@
 <h1 class="p-2">{{ 'favorites.title' | translate }}</h1>
-<app-search *ngIf="searchForm" [formControl]="searchForm" [placeholder]="'actions.search' | translate"></app-search>
+
+<app-search
+  *ngIf="searchForm"
+  [formControl]="searchForm"
+  [placeholder]="'actions.search' | translate">
+</app-search>
+
 <app-grid>
   <ng-container *ngFor="let favorite of favorites">
-    <div class="p-2">
-      <app-card>
-        <ng-container image *ngTemplateOutlet="image; context:{ $implicit: favorite }">
-        </ng-container>
-        <ng-container body *ngTemplateOutlet="body; context:{ $implicit: favorite }">
-        </ng-container>
-      </app-card>
-    </div>
+    <app-favorite-card [favorite]="favorite" (clickToRemove)="removeFavorite($event)"></app-favorite-card>
   </ng-container>
 </app-grid>
 
-
-<ng-template #image let-favorite>
-  <div *ngIf="favorite?.image" class="overflow-hidden h-40">
-    <img class="rounded-t-lg w-full" [src]="favorite.image" alt="" />
-  </div>
-</ng-template>
-
-<ng-template #body let-favorite>
-  <ng-container
-    *ngTemplateOutlet="content; context:{ $implicit: favorite }">
-  </ng-container>
-  <ng-container
-    *ngTemplateOutlet="footer; context:{ $implicit: favorite }">
-  </ng-container>
-</ng-template>
-
-<ng-template #content let-favorite>
-  <div class="pb-6 pt-2 px-4 rounded-lg bg-white">
-    <h1 class="line-clamp-2 h-16">{{ favorite.title }}</h1>
-  </div>
-</ng-template>
-
-<ng-template #footer let-favorite>
-  <div class="py-2 px-4 border-t text-xs text-gray-700">
-    <p class="text-xs flex items-center">
-      <svg-icon (click)="removeFavorite(favorite)" src="./assets/svg/star.svg" class="mr-1 w-6 text-primary cursor-pointer"></svg-icon>
-      </p>
-  </div>
-</ng-template>

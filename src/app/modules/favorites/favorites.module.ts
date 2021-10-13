@@ -8,11 +8,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { FavoritesComponent } from './favorites.component';
+import { FavoriteCardComponent } from './components/favorite-card/favorite-card.component';
+import { CoreModule } from '../../core/core.module';
+
 
 
 @NgModule({
   declarations: [
-    FavoritesComponent
+    FavoritesComponent,
+    FavoriteCardComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +30,8 @@ import { FavoritesComponent } from './favorites.component';
     }),
     SharedModule,
     AngularSvgIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
   ],
   providers: [
     FormBuilder
