@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { httpLoaderFactory } from '../utils/http-loader.factory';
 import { AngularSvgIconModule } from 'angular-svg-icon';
-import { ModalComponent } from './modal/modal.component';
 import * as fromFavorites from './state/favorites/favorites.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -13,8 +12,7 @@ import { FavoritesEffects } from './state/favorites/favorites.effects';
 
 @NgModule({
   declarations: [
-    HeaderComponent,
-    ModalComponent
+    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -27,11 +25,10 @@ import { FavoritesEffects } from './state/favorites/favorites.effects';
     }),
     AngularSvgIconModule,
     StoreModule.forFeature(fromFavorites.favoritesFeatureKey, fromFavorites.reducer),
-    EffectsModule.forFeature([FavoritesEffects]),
+    EffectsModule.forFeature([FavoritesEffects])
   ],
   exports: [
-    HeaderComponent,
-    ModalComponent
+    HeaderComponent
   ]
 })
 export class CoreModule { }

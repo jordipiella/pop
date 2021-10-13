@@ -5,7 +5,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { modalAnimation } from '../../shared/animations/animations.constants';
+import { modalAnimation } from '../animations/animations.constants';
 
 @Component({
 
@@ -22,6 +22,8 @@ export class ModalComponent implements AfterViewInit {
   afterViewInit: EventEmitter<boolean> = new EventEmitter<boolean>();
   @ViewChild('content', { read: ViewContainerRef }) content!: ViewContainerRef;
 
+  visible: boolean = true;
+
   constructor(
   ) { }
 
@@ -30,6 +32,7 @@ export class ModalComponent implements AfterViewInit {
   }
 
   close(): void {
+    this.visible = false;
     this.clickClose.emit(true);
   }
 
