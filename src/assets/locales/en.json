@@ -6,5 +6,8 @@
   "actions": {
     "load-more": "Load more",
     "search": "Search..."
+  },
+  "favorites": {
+    "title": "Favorites"
   }
 }
