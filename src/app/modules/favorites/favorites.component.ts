@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { debounceTime, delay, distinctUntilChanged, filter, startWith, tap } from 'rxjs/operators';
+import { delay, startWith, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { FavoriteModel } from '@core';

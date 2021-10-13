@@ -18,7 +18,6 @@ export class FavoritesEffects {
   addFavorite$ = createEffect(() => this.actions$.pipe(
     ofType(addFavorite),
     map((favorite: { data: FavoriteModel[] }) => {
-      debugger
       this.favoritesService.addFavorite(favorite.data[0]);
       return this.favoritesService.favorites;
     }),
