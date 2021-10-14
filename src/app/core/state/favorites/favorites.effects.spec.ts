@@ -69,7 +69,6 @@ describe('FavoritesEffects', () => {
       actions$ = of(addFavorite( { data: []}));
       favoritesService.addFavorite(favoriteMockModel);
       effects.addFavorite$.subscribe((res) => {
-        console.log('res', res)
         expect(res).toEqual(addFavoriteSuccess({ data: [ favoriteMockModel ] }));
       });
     });
