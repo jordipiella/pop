@@ -11,6 +11,8 @@ import {
 } from './favorites.actions';
 import { FavoriteModel } from '../../services/favorites/models/favorite.model';
 import { FavoriteService } from '../../services/favorites/favorite.service';
+import { AppFacade } from '../../services/app.facade';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Injectable()
@@ -25,7 +27,10 @@ export class FavoritesEffects {
   addFavorite$ = createEffect(() => this.actions$.pipe(
     ofType(addFavorite),
     map((favorite: { data: FavoriteModel[] }) => {
-      this.favoritesService.addFavorite(favorite.data[0]);
+      if (favorite?.data?.length) {
+        this.favoritesService.addFavorite(favorite.data[0]);
+        this.successFavAlert('added');
+      }
       return this.favoritesService.favorites;
     }),
     map((favorites: FavoriteModel[]) => addFavoriteSuccess({ data: favorites })))
@@ -34,7 +39,10 @@ export class FavoritesEffects {
   removeFavorite$ = createEffect(() => this.actions$.pipe(
     ofType(removeFavorite),
     map((favorite: { data: FavoriteModel[] }) => {
-      this.favoritesService.removeFavorite(favorite.data[0]);
+      if (favorite?.data?.length) {
+        this.favoritesService.removeFavorite(favorite.data[0]);
+        this.successFavAlert('removed');
+      }
       return this.favoritesService.favorites;
     }),
     map((favorites: FavoriteModel[]) => removeFavoriteSuccess({ data: favorites })))
@@ -42,8 +50,17 @@ export class FavoritesEffects {
 
   constructor(
     private actions$: Actions,
-    private favoritesService: FavoriteService
+    private favoritesService: FavoriteService,
+    private appFacade: AppFacade,
+    private translate: TranslateService
   ) {}
+
+  successFavAlert(action: 'added' | 'removed' = 'added'): void {
+    const title: string = this.translate.instant(`favorites.${ action }.title`);
+    const text: string = this.translate.instant(`favorites.${ action }.text`);
+    this.appFacade.successAlert(title, text);
+  }
+
 }
 
 

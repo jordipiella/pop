@@ -9,6 +9,18 @@
   },
   "favorites": {
     "title": "Favorites",
-    "not-found": "Not found"
+    "not-found": "Not found",
+    "added": {
+      "title": "Added to favorites!",
+      "text": "Item successfully added to favorites"
+    },
+    "removed": {
+      "title": "Removed from favorites!",
+      "text": "Item successfully removed from favorites"
+    }
+  },
+  "error": {
+    "title": "An error has occurred",
+    "text": "We have had some issues, please try again later"
   }
 }
