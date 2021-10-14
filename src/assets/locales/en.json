@@ -20,6 +20,7 @@
     }
   },
   "error": {
-    "title": "An error has occurred"
+    "title": "An error has occurred",
+    "text": "We have had some issues, please try again later"
   }
 }
