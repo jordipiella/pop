@@ -1,4 +1,4 @@
-import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core';
+import { Component, ContentChild, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-card',

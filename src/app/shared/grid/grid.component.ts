@@ -1,4 +1,4 @@
-import { Component, ContentChild, OnInit, TemplateRef } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-grid',

@@ -1,5 +1,5 @@
-import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef, Component } from '@angular/core';
-import { filter, take, tap } from 'rxjs/operators';
+import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
+import { take, tap } from 'rxjs/operators';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 
 @Injectable({
