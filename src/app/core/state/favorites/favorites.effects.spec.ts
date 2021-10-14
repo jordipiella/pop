@@ -16,6 +16,8 @@ import {
 } from './favorites.actions';
 import { FavoriteService } from '../../services/favorites/favorite.service';
 import { favoriteMockModel } from '../../services/favorites/mocks/favorites-mock.model';
+import { AppFacade } from '../../services/app.facade';
+import { TranslateService, TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
 
 const initialState = {
@@ -27,11 +29,16 @@ describe('FavoritesEffects', () => {
   let effects: FavoritesEffects;
   let store: MockStore<IFavoritesState>;
   let favoritesService: FavoriteService;
+  let appFacade: AppFacade;
+  let translate: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot({
+          loader: { provide: TranslateLoader, useClass: TranslateFakeLoader }
+        })
       ],
       providers: [
         FavoritesEffects,
@@ -42,6 +49,8 @@ describe('FavoritesEffects', () => {
     effects = TestBed.inject(FavoritesEffects);
     store = TestBed.inject(MockStore);
     favoritesService = TestBed.inject(FavoriteService);
+    appFacade = TestBed.inject(AppFacade);
+    translate = TestBed.inject(TranslateService);
   });
 
   describe('loadFavorites$', () => {
@@ -57,25 +66,34 @@ describe('FavoritesEffects', () => {
 
   describe('addFavorite$', () => {
     it('should call favoritesService.addFavorite and return typed Action', () => {
-      spyOn(favoritesService, 'addFavorite');
+      actions$ = of(addFavorite( { data: []}));
       favoritesService.addFavorite(favoriteMockModel);
-      actions$ = of(addFavorite);
       effects.addFavorite$.subscribe((res) => {
+        console.log('res', res)
         expect(res).toEqual(addFavoriteSuccess({ data: [ favoriteMockModel ] }));
       });
-      expect(favoritesService.addFavorite).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('removeFavorite$', () => {
     it('should call favoritesService.removeFavorite and return typed Action', () => {
-      spyOn(favoritesService, 'removeFavorite');
-      favoritesService.removeFavorite(favoriteMockModel);
+      favoritesService.addFavorite(favoriteMockModel);
       actions$ = of(removeFavorite);
       effects.removeFavorite$.subscribe((res) => {
         expect(res).toEqual(removeFavoriteSuccess({ data: [ favoriteMockModel ] }));
       });
-      expect(favoritesService.removeFavorite).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('successFavAlert$', () => {
+    it('should call translate instant with .added. and successAlert', () => {
+      spyOn(translate, 'instant').and.returnValue('translateString');
+      spyOn(appFacade, 'successAlert');
+      effects.successFavAlert('added')
+      expect(translate.instant).toHaveBeenCalledTimes(2);
+      expect(translate.instant).toHaveBeenCalledWith('favorites.added.title');
+      expect(translate.instant).toHaveBeenCalledWith('favorites.added.text');
+      expect(appFacade.successAlert).toHaveBeenCalledWith('translateString', 'translateString');
     });
   });
 
