@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { getFavoritesSuccess, getFavorites, addFavorite, addFavoriteSuccess, removeFavorite, removeFavoriteSuccess } from './favorites.actions';
+import {
+  getFavoritesSuccess,
+  getFavorites,
+  addFavorite,
+  addFavoriteSuccess,
+  removeFavorite,
+  removeFavoriteSuccess
+} from './favorites.actions';
 import { FavoriteModel } from '../../services/favorites/models/favorite.model';
 import { FavoriteService } from '../../services/favorites/favorite.service';
 
@@ -12,7 +19,7 @@ export class FavoritesEffects {
   loadFavorites$ = createEffect(() => this.actions$.pipe(
     ofType(getFavorites),
     map(() => this.favoritesService.favorites),
-    map((favorites: any) => getFavoritesSuccess(favorites)))
+    map((favorites: FavoriteModel[]) => getFavoritesSuccess({ data: favorites })))
   );
 
   addFavorite$ = createEffect(() => this.actions$.pipe(
