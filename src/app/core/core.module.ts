@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HeaderComponent } from './header/header.component';
 import { httpLoaderFactory } from '../utils/http-loader.factory';
 import { AngularSvgIconModule } from 'angular-svg-icon';
@@ -9,6 +9,7 @@ import * as fromFavorites from './state/favorites/favorites.reducer';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { FavoritesEffects } from './state/favorites/favorites.effects';
+import { ErrorInterceptor } from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,9 @@ import { FavoritesEffects } from './state/favorites/favorites.effects';
   ],
   exports: [
     HeaderComponent
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true  }
   ]
 })
 export class CoreModule { }
