@@ -11,6 +11,7 @@ import { DropDownComponent } from './dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { ModalComponent } from './modal/modal.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     GridComponent,
     BadgeComponent,
     DropDownComponent,
-    SearchComponent
+    SearchComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,

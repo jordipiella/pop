@@ -1,9 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { MockComponent } from './core/mocks/mock-component';
+import { ModalService } from './core/services/modal/modal.service';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let modalService: ModalService;
+  let translate: TranslateService;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -11,27 +18,45 @@ describe('AppComponent', () => {
         TranslateModule.forRoot()
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        MockComponent({ selector: 'app-header' })
       ],
     }).compileComponents();
   });
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    modalService = TestBed.inject(ModalService);
+    translate = TestBed.inject(TranslateService);
+    fixture.detectChanges();
   });
 
-  it(`should have as title 'pop'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('pop');
+  describe('#ngOnInit', () => {
+    it('should call translate setDefaultLang and instant with en and header.title', () => {
+      spyOn(translate, 'setDefaultLang');
+      spyOn(translate, 'instant');
+      component.ngOnInit();
+      expect(translate.setDefaultLang).toHaveBeenCalledWith('en');
+      expect(translate.instant).toHaveBeenCalledWith('header.title');
+    });
   });
 
-  // it('should render title', () => {
-  //   const fixture = TestBed.createComponent(AppComponent);
-  //   fixture.detectChanges();
-  //   const compiled = fixture.nativeElement as HTMLElement;
-  //   expect(compiled.querySelector('.content span')?.textContent).toContain('pop app is running!');
+  describe('#headerClick', () => {
+    it('should call component.openFavoriteModal', () => {
+      spyOn(component, 'openFavoriteModal');
+      component.headerClick('star');
+      expect(component.openFavoriteModal).toHaveBeenCalled();
+    });
+  });
+
+  // TODO: After refactor fn
+  // describe('#openFavoriteModal', () => {
+  //   it('should', () => {
+  //     spyOn(modalService, 'openModal');
+  //     component.openFavoriteModal();
+  //     expect(modalService.openModal).toHaveBeenCalled();
+  //   });
   // });
+
 });

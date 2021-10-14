@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,7 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent {
 
+  @Input() title: string = '';
+  @Output() eventClick: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(
   ) { }
+
+  clickEvent(value: string): void {
+    this.eventClick.emit(value)
+  }
 
 }

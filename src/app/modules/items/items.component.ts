@@ -62,7 +62,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   setSearch(value: string): void {
-    console.log(value)
     if (!value) {
       delete this.queryParams.q;
       return;
@@ -132,5 +131,9 @@ export class ItemsComponent implements OnInit, OnDestroy {
       this.queryParams._page += 1;
       this.getAllItems(this.queryParams);
     }
+  }
+
+  addToFavorite(item: ItemModel): void {
+    this.itemsFacade.addToFavorite(item);
   }
 }

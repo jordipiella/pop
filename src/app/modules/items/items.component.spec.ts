@@ -9,6 +9,7 @@ import { ItemsFacade } from './services/items.facade';
 import { itemMockModel } from './services/items/mocks/item-mock.model';
 import { ItemModel } from './services/items/models/item.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MockComponent } from '../../core/mocks/mock-component';
 
 const initialState: unknown = {
   data: [],
@@ -27,7 +28,13 @@ describe('ItemsComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [
-        ItemsComponent
+        ItemsComponent,
+        MockComponent({ selector: 'app-dropdown', inputs:[ 'formControl', 'options', 'emptyOption'] }),
+        MockComponent({ selector: 'app-search', inputs:[ 'formControl', 'placeholder'] }),
+        MockComponent({ selector: 'app-grid' }),
+        MockComponent({ selector: 'app-button' }),
+        MockComponent({ selector: 'app-badge' }),
+        MockComponent({ selector: 'svg-icon' })
       ],
       imports: [
         TranslateModule.forRoot(),

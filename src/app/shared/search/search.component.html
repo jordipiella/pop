@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <div class="shadow flex w-full">
     <input class="w-full rounded p-2 outline-none" formControlName="search" type="text" [placeholder]="placeholder">
-    <button *ngIf="isVisibleClean()" (click)="cleanSearch()" class="bg-white w-auto flex justify-end items-center text-primary p-2">
+    <button *ngIf="isVisibleClean()" (click)="cleanSearch()" class="bg-white w-auto flex justify-end items-center p-2">
       <svg-icon src="./assets/svg/close.svg" class="mr-1 w-4"></svg-icon>
     </button>
     <button class="bg-white w-auto flex justify-end items-center text-primary p-2">
