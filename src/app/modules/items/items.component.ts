@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ItemModel } from './services/items/models/item.model';
+import { ItemModel } from './models/item.model';
 import { ItemsFacade } from './services/items.facade';
 import { IQueryParams } from '../api/interfaces/pagination.interface';
 import { Observable, Subscription } from 'rxjs';

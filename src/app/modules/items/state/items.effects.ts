@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { IApiResponse } from '@api';
 import { getItems, getItemsSuccess, getItemsFailure } from './items.actions';
 import { ItemsService } from '../services/items/items.service';
-import { ItemModel } from '../services/items/models/item.model';
+import { ItemModel } from '../models/item.model';
 import { IQueryParams } from '../../api/interfaces/pagination.interface';
 
 

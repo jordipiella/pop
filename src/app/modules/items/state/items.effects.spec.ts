@@ -6,10 +6,10 @@ import { ItemsState } from './items.reducer';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { getItems, getItemsSuccess } from './items.actions';
-import { itemMockModel } from '../services/items/mocks/item-mock.model';
+import { itemMockModel } from '../mocks/item-mock.model';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ItemModel } from '../services/items/models/item.model';
+import { ItemModel } from '../models/item.model';
 import { IApiResponse } from '@api';
 
 const initialState = {
