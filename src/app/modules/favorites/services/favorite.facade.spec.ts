@@ -1,13 +1,13 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
-import { favoriteMockModel } from '@core';
+import { productMockModel } from '@core';
 import { of } from 'rxjs';
 import * as fromFavorites from '../../../core/state/favorites/favorites.reducer';
 import { FavoritesFacade } from './favorite.facade';
 import { AppFacade } from '../../../core/services/app.facade';
 import { IFavoritesState } from '../../../core/state/favorites/favorites.reducer';
-import { FavoriteModel } from '../../../core/services/favorites/models/favorite.model';
+import { ProductModel } from '../../../core/models/product.model';
 
 describe('FavoritesFacade', () => {
   let service: FavoritesFacade;
@@ -32,25 +32,25 @@ describe('FavoritesFacade', () => {
   describe('#addFavorite', () => {
     it('should call appFacade.addFavorite with favorite', () => {
       spyOn(appFacade, 'addFavorite');
-      service.addFavorite(favoriteMockModel);
-      expect(appFacade.addFavorite).toHaveBeenCalledOnceWith(favoriteMockModel);
+      service.addFavorite(productMockModel);
+      expect(appFacade.addFavorite).toHaveBeenCalledOnceWith(productMockModel);
     });
   });
 
   describe('#removeFavorite', () => {
     it('should call appFacade.removeFavorite with favorite', () => {
       spyOn(appFacade, 'removeFavorite');
-      service.removeFavorite(favoriteMockModel);
-      expect(appFacade.removeFavorite).toHaveBeenCalledOnceWith(favoriteMockModel);
+      service.removeFavorite(productMockModel);
+      expect(appFacade.removeFavorite).toHaveBeenCalledOnceWith(productMockModel);
     });
   });
 
   describe('#favorites$', () => {
     it('should return observable of [favorite]', () => {
-      appFacade.favorites$ = of([favoriteMockModel]);
+      appFacade.favorites$ = of([productMockModel]);
       service.favorites$
-      .subscribe((favorites: FavoriteModel[]) => {
-        expect(favorites).toEqual([favoriteMockModel]);
+      .subscribe((favorites: ProductModel[]) => {
+        expect(favorites).toEqual([productMockModel]);
       });
     });
   });

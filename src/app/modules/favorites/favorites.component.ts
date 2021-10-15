@@ -2,7 +2,7 @@ import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 import { debounceTime, delay, distinctUntilChanged, startWith, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { FavoriteModel } from '@core';
+import { ProductModel } from '@core';
 import { FavoritesFacade } from './services/favorite.facade';
 import { normalizeDiacritics } from 'src/app/utils/normalize-diacritics';
 
@@ -14,8 +14,8 @@ import { normalizeDiacritics } from 'src/app/utils/normalize-diacritics';
 })
 export class FavoritesComponent implements AfterViewInit, OnDestroy {
 
-  favorites: FavoriteModel[] = [];
-  allFavorites: FavoriteModel[] = [];
+  favorites: ProductModel[] = [];
+  allFavorites: ProductModel[] = [];
   searchForm: FormControl = this.fb.control('');
   subscriptions: Subscription[] = [];
 
@@ -39,12 +39,12 @@ export class FavoritesComponent implements AfterViewInit, OnDestroy {
       .pipe(
         startWith([]),
         delay(0),
-        tap((favorites: FavoriteModel[]) => this.setFavorites(favorites)),
+        tap((favorites: ProductModel[]) => this.setFavorites(favorites)),
         tap(() => this.setSearch(this.searchForm.value)),
       ).subscribe();
   }
 
-  setFavorites(favorites: FavoriteModel[] = []): void {
+  setFavorites(favorites: ProductModel[] = []): void {
     this.favorites = [...favorites];
     this.allFavorites = [...favorites];
   }
@@ -68,7 +68,7 @@ export class FavoritesComponent implements AfterViewInit, OnDestroy {
   }
 
   // TODO: Refactor to generic fn to filter arrays
-  filterFavorites(favorites: FavoriteModel[] = [], value: string = ''): FavoriteModel[] {
+  filterFavorites(favorites: ProductModel[] = [], value: string = ''): ProductModel[] {
     const normValue: string = normalizeDiacritics(value);
     const regex: RegExp = new RegExp(normValue, 'gi');
     return favorites.filter((x) => {
@@ -77,7 +77,7 @@ export class FavoritesComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  removeFavorite(favorite: FavoriteModel): void {
+  removeFavorite(favorite: ProductModel): void {
     this.favoritesFacade.removeFavorite(favorite);
   }
 }

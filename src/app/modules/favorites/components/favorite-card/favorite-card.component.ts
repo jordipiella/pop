@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { FavoriteModel } from '../../../../core/services/favorites/models/favorite.model';
+import { ProductModel } from '../../../../core/models/product.model';
 
 @Component({
   selector: 'app-favorite-card',
@@ -8,13 +8,13 @@ import { FavoriteModel } from '../../../../core/services/favorites/models/favori
 })
 export class FavoriteCardComponent {
 
-  @Input() favorite: FavoriteModel | undefined;
-  @Output() clickToRemove: EventEmitter<FavoriteModel> = new EventEmitter<FavoriteModel>();
+  @Input() favorite: ProductModel | undefined;
+  @Output() clickToRemove: EventEmitter<ProductModel> = new EventEmitter<ProductModel>();
 
   constructor(
   ) { }
 
-  removeFavorite(favorite: FavoriteModel): void {
+  removeFavorite(favorite: ProductModel): void {
     this.clickToRemove.emit(favorite);
   }
 
