@@ -4,7 +4,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { AppFacade } from './app.facade';
 import { IFavoritesState } from '../state/favorites/favorites.reducer';
 import * as fromFavorites from '../state/favorites/favorites.reducer';
-import { favoriteMockModel } from './favorites/mocks/favorites-mock.model';
+import { productMockModel } from '../mocks/product-mock.model';
 import { addFavorite, removeFavorite } from '../state/favorites/favorites.actions';
 import { AlertService } from './alert/alert.service';
 
@@ -31,16 +31,16 @@ describe('AppFacade', () => {
   describe('#addFavorite()', () => {
     it('should call should call store.dispatch with addFavorite', () => {
       spyOn(store, 'dispatch');
-      service.addFavorite(favoriteMockModel);
-      expect(store.dispatch).toHaveBeenCalledWith(addFavorite({ data: [ favoriteMockModel ] }));
+      service.addFavorite(productMockModel);
+      expect(store.dispatch).toHaveBeenCalledWith(addFavorite({ data: [ productMockModel ] }));
     });
   });
 
   describe('#removeFavorite()', () => {
     it('should call store.dispatch with removeFavorite', () => {
       spyOn(store, 'dispatch');
-      service.removeFavorite(favoriteMockModel);
-      expect(store.dispatch).toHaveBeenCalledWith(removeFavorite({ data: [ favoriteMockModel ]}));
+      service.removeFavorite(productMockModel);
+      expect(store.dispatch).toHaveBeenCalledWith(removeFavorite({ data: [ productMockModel ]}));
     });
   });
 

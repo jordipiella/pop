@@ -15,7 +15,7 @@ import {
   removeFavoriteSuccess
 } from './favorites.actions';
 import { FavoriteService } from '../../services/favorites/favorite.service';
-import { favoriteMockModel } from '../../services/favorites/mocks/favorites-mock.model';
+import { productMockModel } from '../../mocks/product-mock.model';
 import { AppFacade } from '../../services/app.facade';
 import { TranslateService, TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
 
@@ -55,10 +55,10 @@ describe('FavoritesEffects', () => {
 
   describe('loadFavorites$', () => {
     it('should call favoritesService.favorites and return typed Action', () => {
-      const spy: jasmine.Spy =  spyOnProperty(favoritesService, 'favorites', 'get').and.returnValue([ favoriteMockModel ]);
+      const spy: jasmine.Spy =  spyOnProperty(favoritesService, 'favorites', 'get').and.returnValue([ productMockModel ]);
       actions$ = of(getFavorites);
       effects.loadFavorites$.subscribe((res) => {
-        expect(res).toEqual(getFavoritesSuccess({ data: [ favoriteMockModel ] }));
+        expect(res).toEqual(getFavoritesSuccess({ data: [ productMockModel ] }));
       });
       expect(spy).toHaveBeenCalledTimes(1);
     });
@@ -67,19 +67,19 @@ describe('FavoritesEffects', () => {
   describe('addFavorite$', () => {
     it('should call favoritesService.addFavorite and return typed Action', () => {
       actions$ = of(addFavorite( { data: []}));
-      favoritesService.addFavorite(favoriteMockModel);
+      favoritesService.addFavorite(productMockModel);
       effects.addFavorite$.subscribe((res) => {
-        expect(res).toEqual(addFavoriteSuccess({ data: [ favoriteMockModel ] }));
+        expect(res).toEqual(addFavoriteSuccess({ data: [ productMockModel ] }));
       });
     });
   });
 
   describe('removeFavorite$', () => {
     it('should call favoritesService.removeFavorite and return typed Action', () => {
-      favoritesService.addFavorite(favoriteMockModel);
+      favoritesService.addFavorite(productMockModel);
       actions$ = of(removeFavorite);
       effects.removeFavorite$.subscribe((res) => {
-        expect(res).toEqual(removeFavoriteSuccess({ data: [ favoriteMockModel ] }));
+        expect(res).toEqual(removeFavoriteSuccess({ data: [ productMockModel ] }));
       });
     });
   });
