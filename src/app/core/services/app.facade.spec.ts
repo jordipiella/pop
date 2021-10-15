@@ -8,10 +8,11 @@ import { productMockModel } from '../mocks/product-mock.model';
 import { addFavorite, removeFavorite } from '../state/favorites/favorites.actions';
 import { AlertService } from './alert/alert.service';
 
-describe('AppFacade', () => {
+fdescribe('AppFacade', () => {
   let service: AppFacade;
   let store: Store<IFavoritesState>;
   let alertService: AlertService;
+  let modalService: ModalService;
 
 
   beforeEach(() => {
@@ -26,6 +27,7 @@ describe('AppFacade', () => {
     service = TestBed.inject(AppFacade);
     store = TestBed.inject(Store);
     alertService = TestBed.inject(AlertService);
+    modalService = TestBed.inject(ModalService);
   });
 
   describe('#addFavorite()', () => {
@@ -61,6 +63,49 @@ describe('AppFacade', () => {
       spyOn(alertService, 'error');
       service.errorAlert(title, text);
       expect(alertService.error).toHaveBeenCalledWith(title, text);
+    });
+  });
+
+  describe('#openModal()', () => {
+    it('should call modalService.openModal with component, module', () => {
+      const component: any = { component: 'component' };
+      const module: any = { module: 'module' };
+      spyOn(modalService, 'openModal');
+      service.openModal(component, module);
+      expect(modalService.openModal).toHaveBeenCalledWith(component, module);
+    });
+    it('should call modalService.openModal with component, null', () => {
+      const component: any = { component: 'component' };
+      spyOn(modalService, 'openModal');
+      service.openModal(component, null);
+      expect(modalService.openModal).toHaveBeenCalledWith(component, null);
+    });
+  });
+
+  describe('#closeModal()', () => {
+    it('should call modalService.closeModal', () => {
+      spyOn(modalService, 'closeModal');
+      service.closeModal();
+      expect(modalService.closeModal).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#modalOpened()', () => {
+    it('should call modalService.modalOpened', () => {
+      const ref: ViewContainerRef = null;
+      spyOn(modalService, 'modalOpened');
+      service.modalOpened();
+      expect(modalService.modalOpened).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#get isOpen$', () => {
+    it('should return Observable<boolean>', () => {
+      spyOn(modalService, 'isOpen$').and.returnValue(of(true));
+      service.isOpen$
+        .subscribe((res) => {
+          expect(res).toEqual(true);
+        });
     });
   });
 
