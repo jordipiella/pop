@@ -1,5 +1,5 @@
 import { ItemModel } from '../models/item.model';
-import { ItemContract } from '../../api/services/api-items/contracts/item.contract';
+import { ItemContract } from '@api';
 
 
 export class ItemTranslator {

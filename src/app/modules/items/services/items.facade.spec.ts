@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ItemsFacade } from './items.facade';
-import { IQueryParams } from '../../api/interfaces/pagination.interface';
+import { IQueryParams } from '@api';
 import { ItemsService } from './items/items.service';
 import { itemMockModel } from '../mocks/item-mock.model';
 import { ItemModel } from '../models/item.model';

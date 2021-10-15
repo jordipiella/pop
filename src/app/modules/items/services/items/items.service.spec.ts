@@ -2,7 +2,6 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import {
   ApiItemsService,
-  ApiModule,
   itemMockContract,
   IApiResponse,
   ItemContract,
@@ -36,10 +35,11 @@ describe('ItemsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule,
-        ApiModule
+        HttpClientTestingModule
       ],
-      providers: []
+      providers: [
+        ApiItemsService
+      ]
     });
     service = TestBed.inject(ItemsService);
     apiItems = TestBed.inject(ApiItemsService);

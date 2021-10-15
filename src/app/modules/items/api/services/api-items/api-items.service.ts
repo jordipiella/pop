@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ItemContract } from './contracts/item.contract';
+import { ItemContract } from '../../contracts/item.contract';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
-import { IQueryParams } from '../../interfaces/pagination.interface';
+import { IQueryParams } from '../../interfaces/query-params.interface';
 import { IApiResponse } from '../../interfaces/response.interface';
-import { API_ITEMS_URL, API_DEFAULT_PAGE, API_DEFAULT_LIMIT } from '../../constants/api.constants';
+import { API_ITEMS_URL, API_DEFAULT_PAGE, API_DEFAULT_LIMIT } from '@api';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class ApiItemsService {
 

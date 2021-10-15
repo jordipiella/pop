@@ -1,8 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ItemModel } from '../models/item.model';
-import { IQueryParams } from '../../api/interfaces/pagination.interface';
-import { IApiResponse } from '../../api/interfaces/response.interface';
+import { IQueryParams, IApiResponse } from '@api';
 
 export const getItems = createAction(
     '[Items] - get Item List',

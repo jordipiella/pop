@@ -1,12 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemModel } from './models/item.model';
 import { ItemsFacade } from './services/items.facade';
-import { IQueryParams } from '../api/interfaces/pagination.interface';
 import { Observable, Subscription } from 'rxjs';
-import { IApiResponse } from '../api/interfaces/response.interface';
 import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { OrderEnum } from '../api/enums/order.enum';
+import { OrderEnum, IQueryParams, IApiResponse } from '@api';
 
 
 @Component({
