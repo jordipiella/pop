@@ -4,6 +4,11 @@ import { AppComponent } from './app.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from './core/mocks/mock-component';
 import { ModalService } from './core/services/modal/modal.service';
+import { provideMockStore } from '@ngrx/store/testing';
+
+const initialState: unknown = {
+  data: []
+};
 
 describe('AppComponent', () => {
   let component: AppComponent;
@@ -21,6 +26,9 @@ describe('AppComponent', () => {
         AppComponent,
         MockComponent({ selector: 'app-header' })
       ],
+      providers: [
+        provideMockStore({ initialState: { favorites: initialState } })
+      ]
     }).compileComponents();
   });
 
@@ -41,22 +49,5 @@ describe('AppComponent', () => {
       expect(translate.instant).toHaveBeenCalledWith('header.title');
     });
   });
-
-  describe('#headerClick', () => {
-    it('should call component.openFavoriteModal', () => {
-      spyOn(component, 'openFavoriteModal');
-      component.headerClick('star');
-      expect(component.openFavoriteModal).toHaveBeenCalled();
-    });
-  });
-
-  // TODO: After refactor fn
-  // describe('#openFavoriteModal', () => {
-  //   it('should', () => {
-  //     spyOn(modalService, 'openModal');
-  //     component.openFavoriteModal();
-  //     expect(modalService.openModal).toHaveBeenCalled();
-  //   });
-  // });
 
 });
