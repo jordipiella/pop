@@ -1,6 +1,6 @@
 import { ComponentFactory, ComponentFactoryResolver, ComponentRef, Injectable, ViewContainerRef } from '@angular/core';
 import { take, tap } from 'rxjs/operators';
-import { ModalComponent } from '../../../shared/modal/modal.component';
+import { ModalComponent } from '../../modal/modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class ModalService {
    * @returns
    */
   private async loadModalComponent(ref: ViewContainerRef): Promise<ComponentRef<any>> {
-    const { ModalComponent } = await import('../../../shared/modal/modal.component');
+    const { ModalComponent } = await import('../../modal/modal.component');
     const componentRef: ComponentRef<any> = this.createComponent(ref, ModalComponent);
     return componentRef;
   }

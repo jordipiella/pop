@@ -73,7 +73,7 @@ describe('ModalService', () => {
 
   describe('#loadModalComponent()', () => {
     it('should call createComponent', async () => {
-      const { ModalComponent } = await import('../../../shared/modal/modal.component');
+      const { ModalComponent } = await import('../../modal/modal.component');
       const ref: ViewContainerRef = new ViewContainerRefMock();
       const compRef: ComponentRefMock<any> = new ComponentRefMock();
       spyOn<any>(service, 'createComponent').and.returnValue(of(compRef).toPromise());

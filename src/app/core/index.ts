@@ -6,7 +6,7 @@ export * from './services/app.facade';
 
 // Components
 export * from './header/header.component';
-export * from '../shared/modal/modal.component';
+export * from './modal/modal.component';
 
 // Models
 export * from './models/product.model';

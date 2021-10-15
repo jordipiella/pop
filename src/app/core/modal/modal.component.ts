@@ -5,7 +5,7 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { modalAnimation } from '../animations/animations.constants';
+import { modalAnimation } from '../../shared/animations/animations.constants';
 
 @Component({
 
