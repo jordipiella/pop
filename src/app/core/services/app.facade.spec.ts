@@ -7,8 +7,12 @@ import * as fromFavorites from '../state/favorites/favorites.reducer';
 import { productMockModel } from '../mocks/product-mock.model';
 import { addFavorite, removeFavorite } from '../state/favorites/favorites.actions';
 import { AlertService } from './alert/alert.service';
+import { ModalService } from './modal/modal.service';
+import { ViewContainerRef } from '@angular/core';
+import { ViewContainerRefMock } from '@core';
+import { of } from 'rxjs';
 
-fdescribe('AppFacade', () => {
+describe('AppFacade', () => {
   let service: AppFacade;
   let store: Store<IFavoritesState>;
   let alertService: AlertService;
@@ -92,16 +96,16 @@ fdescribe('AppFacade', () => {
 
   describe('#modalOpened()', () => {
     it('should call modalService.modalOpened', () => {
-      const ref: ViewContainerRef = null;
+      const ref: ViewContainerRef = new ViewContainerRefMock();
       spyOn(modalService, 'modalOpened');
-      service.modalOpened();
+      service.modalOpened(ref);
       expect(modalService.modalOpened).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('#get isOpen$', () => {
     it('should return Observable<boolean>', () => {
-      spyOn(modalService, 'isOpen$').and.returnValue(of(true));
+      modalService.isOpen$ = of(true);
       service.isOpen$
         .subscribe((res) => {
           expect(res).toEqual(true);
