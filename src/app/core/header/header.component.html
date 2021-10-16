@@ -2,7 +2,7 @@
   <div class="flex items-center justify-between container mx-auto">
     <h1 class="flex items-center">
       <img class="rounded-md w-10 mr-4 cursor-pointer" src="./assets/images/wallapop-logo.png"/>
-      {{ title }}
+      {{ title | translate }}
     </h1>
     <svg-icon (click)="openFavoriteModal()" src="./assets/svg/star.svg" class="w-3 cursor-pointer"></svg-icon>
   </div>

@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component } from '@angular/core';
 import { AppFacade } from '../services/app.facade';
 
 @Component({
@@ -7,18 +6,13 @@ import { AppFacade } from '../services/app.facade';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
 
   title: string = '';
 
   constructor(
-    private appFacade: AppFacade,
-    private translate: TranslateService
+    private appFacade: AppFacade
   ) { }
-
-  ngOnInit(): void {
-    this.title = this.translate.instant('header.title');
-  }
 
   openFavoriteModal(): void {
     this.appFacade.openFavoritesModal();
