@@ -15,5 +15,5 @@ export const selectTotal = createSelector(
 
 export const selectLoading = createSelector(
   selectItemsState,
-    state => state.loading
+  state => state.loading
 );

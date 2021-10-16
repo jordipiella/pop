@@ -12,7 +12,15 @@ import { ItemsService } from './items.service';
 import { itemMockModel } from '../../mocks/item-mock.model';
 import { ItemModel } from '../../models/item.model';
 import { ItemTranslator } from '../../translate/item.translator';
+import { provideMockStore } from '@ngrx/store/testing';
+import { AppFacade } from '../../../../core/services/app.facade';
 
+const initialState: unknown = {
+  data: [],
+  total: null,
+  loading: false,
+  error: null
+};
 const itemContracts: ItemContract[] = [
   itemMockContract,
   itemMockContract,
@@ -31,6 +39,7 @@ let mockRes: IApiResponse<ItemContract> = {
 describe('ItemsService', () => {
   let service: ItemsService;
   let apiItems: ApiItemsService;
+  let appFacade: AppFacade;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -38,11 +47,14 @@ describe('ItemsService', () => {
         HttpClientTestingModule
       ],
       providers: [
-        ApiItemsService
+        ApiItemsService,
+        provideMockStore({ initialState: { items: initialState }})
+
       ]
     });
     service = TestBed.inject(ItemsService);
     apiItems = TestBed.inject(ApiItemsService);
+    appFacade = TestBed.inject(AppFacade);
   });
   afterEach(() => {
     mockRes = {
@@ -90,4 +102,25 @@ describe('ItemsService', () => {
       expect(apiItems.getAll).toHaveBeenCalledWith(params);
     });
   });
+  describe('#setFavorieProp()', () => {
+    it('should call appFacade.isInFavorites and set fav property to true', () => {
+      spyOn(appFacade, 'isInFavorites').and.returnValue(true);
+      const res: ItemModel[] = service.setFavoriteProp([ itemMockModel, itemMockModel ]);
+      expect(res[0].favorite).toEqual(true);
+      expect(res[1].favorite).toEqual(true);
+      expect(appFacade.isInFavorites).toHaveBeenCalledTimes(2);
+      expect(appFacade.isInFavorites).toHaveBeenCalledWith(itemMockModel);
+    });
+    it('should call appFacade.isInFavorites and set fav property to false', () => {
+      const itemWithFavTrue: ItemModel = { ...itemMockModel, favorite: true };
+      spyOn(appFacade, 'isInFavorites').and.returnValue(false);
+      const res: ItemModel[] = service.setFavoriteProp([ itemWithFavTrue, itemWithFavTrue ]);
+      expect(res[0].favorite).toEqual(false);
+      expect(res[1].favorite).toEqual(false);
+      expect(appFacade.isInFavorites).toHaveBeenCalledTimes(2);
+      expect(appFacade.isInFavorites).toHaveBeenCalledWith(itemWithFavTrue);
+    });
+  });
+
+
 });
