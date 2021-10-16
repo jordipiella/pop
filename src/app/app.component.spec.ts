@@ -5,6 +5,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MockComponent } from './core/mocks/mock-component';
 import { ModalService } from './core/services/modal/modal.service';
 import { provideMockStore } from '@ngrx/store/testing';
+import { FormBuilder } from '@angular/forms';
 
 const initialState: unknown = {
   data: []
@@ -24,9 +25,11 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-        MockComponent({ selector: 'app-header' })
+        MockComponent({ selector: 'app-header' }),
+        MockComponent({ selector: 'app-modal' })
       ],
       providers: [
+        FormBuilder,
         provideMockStore({ initialState: { favorites: initialState } })
       ]
     }).compileComponents();
