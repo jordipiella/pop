@@ -1,4 +1,3 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -35,6 +34,14 @@ export class AppFacade {
 
   openFavoritesModal(): void {
     this.favoriteService.openFavoritesInModal();
+  }
+
+  get favorites() {
+    return this.favoriteService.favorites;
+  }
+
+  isInFavorites(item: Partial<ProductModel>): boolean {
+    return this.favoriteService.isInFavorites(item);
   }
 
   // Alerts

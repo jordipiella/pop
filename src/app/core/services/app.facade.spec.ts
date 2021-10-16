@@ -11,12 +11,14 @@ import { ModalService } from './modal/modal.service';
 import { ViewContainerRef } from '@angular/core';
 import { ViewContainerRefMock } from '@core';
 import { of } from 'rxjs';
+import { FavoriteService } from './favorites/favorite.service';
 
 describe('AppFacade', () => {
   let service: AppFacade;
   let store: Store<IFavoritesState>;
   let alertService: AlertService;
   let modalService: ModalService;
+  let favoriteService: FavoriteService;
 
 
   beforeEach(() => {
@@ -32,6 +34,7 @@ describe('AppFacade', () => {
     store = TestBed.inject(Store);
     alertService = TestBed.inject(AlertService);
     modalService = TestBed.inject(ModalService);
+    favoriteService = TestBed.inject(FavoriteService);
   });
 
   describe('#addFavorite()', () => {
@@ -39,6 +42,30 @@ describe('AppFacade', () => {
       spyOn(store, 'dispatch');
       service.addFavorite(productMockModel);
       expect(store.dispatch).toHaveBeenCalledWith(addFavorite({ data: [ productMockModel ] }));
+    });
+  });
+
+  describe('#removeFavorite()', () => {
+    it('should call store.dispatch with removeFavorite', () => {
+      spyOn(store, 'dispatch');
+      service.removeFavorite(productMockModel);
+      expect(store.dispatch).toHaveBeenCalledWith(removeFavorite({ data: [ productMockModel ]}));
+    });
+  });
+
+  describe('#openFavoritesModal()', () => {
+    it('should call', () => {
+      spyOn(favoriteService, 'openFavoritesInModal');
+      service.openFavoritesModal();
+      expect(favoriteService.openFavoritesInModal).toHaveBeenCalled();
+    });
+  });
+
+  describe('#openFavoritesModal()', () => {
+    it('should call', () => {
+      spyOnProperty(favoriteService, 'favorites', 'get').and.returnValue([productMockModel]);
+      service.favorites;
+      expect(service.favorites).toEqual([productMockModel]);
     });
   });
 

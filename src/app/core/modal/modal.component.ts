@@ -1,11 +1,11 @@
 import {
-  AfterViewInit,
   Component,
+  OnInit,
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
 import { modalAnimation } from '../../shared/animations/animations.constants';
-import { tap } from 'rxjs/operators';
+import { tap, delay } from 'rxjs/operators';
 import { OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppFacade } from '../services/app.facade';
@@ -17,7 +17,7 @@ import { AppFacade } from '../services/app.facade';
   styleUrls: ['./modal.component.scss'],
   animations: [ modalAnimation ]
 })
-export class ModalComponent implements AfterViewInit, OnDestroy {
+export class ModalComponent implements OnInit, OnDestroy {
 
   @ViewChild('content', { read: ViewContainerRef }) content!: ViewContainerRef;
 
@@ -28,7 +28,7 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
     private appFacade: AppFacade
   ) { }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.isOpenSubs();
   }
 
@@ -39,18 +39,16 @@ export class ModalComponent implements AfterViewInit, OnDestroy {
   isOpenSubs(): void {
     this.appFacade.isOpen$.pipe(
       tap((isOpen: boolean) => this.setIsVisible(isOpen)),
+      delay(50),
       tap((isOpen: boolean) => this.modalBehaviour(isOpen, this.content))
     ).subscribe();
   }
 
-  modalBehaviour(isOpen: boolean, ref: ViewContainerRef): void {
+  modalBehaviour(isOpen: boolean, content: ViewContainerRef): void {
     if (!isOpen) {
       return;
     }
-    // Wait for content
-    setTimeout(() => {
-      this.modalOpened(ref);
-    }, 100);
+    this.modalOpened(content);
   }
 
   modalOpened(content: ViewContainerRef | null): void {

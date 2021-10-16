@@ -9,7 +9,8 @@ import { ItemModel } from '../models/item.model';
 import { ItemsState } from '../state/items.reducer';
 import { Store, StoreModule } from '@ngrx/store';
 import * as fromItems from '../state/items.reducer';
-import { getItems, resetStateItems } from '../state/items.actions';
+import { getItems, resetStateItems, setFavPropItems } from '../state/items.actions';
+import { AppFacade } from '../../../core/services/app.facade';
 
 const itemRes: ItemModel[] = [
   itemMockModel,
@@ -20,6 +21,8 @@ const itemRes: ItemModel[] = [
 describe('ItemsFacade', () => {
   let service: ItemsFacade;
   let store: Store<ItemsState>;
+  let appFacade: AppFacade;
+
   const itemService: jasmine.SpyObj<ItemsService> = jasmine.createSpyObj('ItemsService', {
     getAll: of({
       total: 5,
@@ -41,6 +44,7 @@ describe('ItemsFacade', () => {
     });
     service = TestBed.inject(ItemsFacade);
     store = TestBed.inject(Store);
+    appFacade = TestBed.inject(AppFacade);
   });
 
   describe('#getAllItems()', () => {
@@ -57,6 +61,30 @@ describe('ItemsFacade', () => {
       spyOn(store, 'dispatch');
       service.resetStateItems();
       expect(store.dispatch).toHaveBeenCalledWith(resetStateItems());
+    });
+  });
+
+  describe('#addToFavorite()', () => {
+    it('should call appFacade.addFavorite with item', () => {
+      spyOn(appFacade, 'addFavorite');
+      service.addToFavorite(itemMockModel);
+      expect(appFacade.addFavorite).toHaveBeenCalledOnceWith(itemMockModel);
+    });
+  });
+
+  describe('#removeToFavorite()', () => {
+    it('should call appFacade.removeFavorite', () => {
+      spyOn(appFacade, 'removeFavorite');
+      service.removeToFavorite(itemMockModel);
+      expect(appFacade.removeFavorite).toHaveBeenCalledOnceWith(itemMockModel);
+    });
+  });
+
+  describe('#setFavoriteProp()', () => {
+    it('should call should call store.dispatch with setFavPropItems', () => {
+      spyOn(store, 'dispatch');
+      service.setFavoriteProp([ itemMockModel ]);
+      expect(store.dispatch).toHaveBeenCalledWith(setFavPropItems({ data: [ itemMockModel ] }));
     });
   });
 });

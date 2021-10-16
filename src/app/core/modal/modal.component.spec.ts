@@ -44,10 +44,10 @@ describe('ModalComponent', () => {
     fixture.detectChanges();
   }));
 
-  describe('#ngAfterViewInit', () => {
+  describe('#ngOnInit', () => {
     it('should call component.isOpenSubs', () => {
       spyOn(component, 'isOpenSubs');
-      component.ngAfterViewInit();
+      component.ngOnInit();
       expect(component.isOpenSubs).toHaveBeenCalled();
     });
   });
@@ -62,31 +62,31 @@ describe('ModalComponent', () => {
   });
 
   describe('#isOpenSubs', () => {
-    it('should call setIsVisible and modalBehaviour', () => {
+    it('should call setIsVisible and modalBehaviour', fakeAsync(() => {
       const ref: ViewContainerRef = new ViewContainerRefMock();
       component.content = ref;
       spyOnProperty(appFacade, 'isOpen$', 'get').and.returnValue(of(true));
       spyOn(component, 'setIsVisible');
       spyOn(component, 'modalBehaviour');
       component.isOpenSubs();
+      tick(50);
       expect(component.setIsVisible).toHaveBeenCalledWith(true);
       expect(component.modalBehaviour).toHaveBeenCalledWith(true, ref);
-    });
+    }));
   });
 
   describe('#modalBehaviour', () => {
-    it('should call component.modalOpened with ViewContainerRef', fakeAsync(() => {
+    it('should call component.modalOpened with ViewContainerRef', () => {
       const ref: ViewContainerRef = new ViewContainerRefMock();
       spyOn(component, 'modalOpened');
       component.modalBehaviour(true, ref);
-      tick(200);
       expect(component.modalOpened).toHaveBeenCalledWith(ref);
-    }));
-    it('should don`t call component.modalOpened', () => {
+    });
+    it('should don´t call component.modalOpened', () => {
       const ref: ViewContainerRef = new ViewContainerRefMock();
       spyOn(component, 'modalOpened');
       component.modalBehaviour(false, ref);
-      expect(component.modalOpened).not.toHaveBeenCalledWith(ref);
+      expect(component.modalOpened).not.toHaveBeenCalled();
     });
   });
 

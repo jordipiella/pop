@@ -19,8 +19,11 @@
 </app-grid>
 
 <div class="text-center">
-  <app-button *ngIf="total !== items.length" (click)="loadMore()">
-    <svg-icon *ngIf="loading | async" src="./assets/svg/animate-spin.svg" class="mr-1 w-4"></svg-icon>
+  <app-button *ngIf="total !== items?.length" (click)="loadMore()">
+    <svg *ngIf="loading" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
     {{ 'actions.load-more' | translate }}
   </app-button>
 </div>
@@ -65,7 +68,7 @@
   <div class="py-2 px-4 border-t text-xs text-gray-700">
     <p class="text-xs flex">
       <svg-icon src="./assets/svg/mail.svg" class="mr-4 w-4"></svg-icon>
-      <svg-icon (click)="addToFavorite(item)" src="./assets/svg/star.svg" class="mr-1 w-4 hover:text-primary cursor-pointer"></svg-icon>
+      <svg-icon (click)="clickToFavorite(item)" src="./assets/svg/star.svg" [class.text-primary]="item.favorite" class="mr-1 w-4 hover:text-primary cursor-pointer"></svg-icon>
       </p>
   </div>
 </ng-template>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { IQueryParams } from '@api';
-import { getItems, resetStateItems } from '../state/items.actions';
+import { getItems, resetStateItems, setFavPropItems } from '../state/items.actions';
 import { ItemsState } from '../state/items.reducer';
 import { ItemModel } from '../models/item.model';
 import { selectItems, selectTotal, selectLoading } from '../state/items.selector';
@@ -32,6 +32,14 @@ export class ItemsFacade {
 
   addToFavorite(item: ItemModel): void {
     this.appFacade.addFavorite(item);
+  }
+
+  removeToFavorite(item: ItemModel): void {
+    this.appFacade.removeFavorite(item);
+  }
+
+  setFavoriteProp(items: ItemModel[]): void {
+    this.store.dispatch(setFavPropItems({ data: items }));
   }
 
 }

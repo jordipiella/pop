@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as itemAction from './items.actions';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ItemModel } from '../models/item.model';
+import { data } from 'autoprefixer';
 
 export const itemsFeatureKey: string = 'items';
 
@@ -30,7 +31,7 @@ export const reducer = createReducer(
     on(itemAction.getItemsSuccess, (state, action) => {
         return {
             ...state,
-            data: [...action.data],
+            data: [...state.data, ...action.data],
             total: action.total ? action.total : 0,
             loading: false
         };
@@ -44,5 +45,18 @@ export const reducer = createReducer(
     }),
     on(itemAction.resetStateItems, (state, action) => {
         return initialState;
+    }),
+    on(itemAction.setFavPropItems, (state) => {
+      return {
+        ...state,
+        loading: true
+      };
+    }),
+    on(itemAction.setFavPropItemsSuccess, (state, action) => {
+      return {
+        ...state,
+        data: [...action.data],
+        loading: false
+      };
     })
 );
