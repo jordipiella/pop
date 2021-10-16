@@ -30,12 +30,8 @@ describe('ItemsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         ItemsComponent,
-        MockComponent({ selector: 'app-dropdown', inputs:[ 'formControl', 'options', 'emptyOption'] }),
-        MockComponent({ selector: 'app-search', inputs:[ 'formControl', 'placeholder'] }),
         MockComponent({ selector: 'app-grid' }),
-        MockComponent({ selector: 'app-button' }),
-        MockComponent({ selector: 'app-badge' }),
-        MockComponent({ selector: 'svg-icon' })
+        MockComponent({ selector: 'app-load-more', inputs: [ 'text', 'loading' ] })
       ],
       imports: [
         TranslateModule.forRoot(),
@@ -295,6 +291,19 @@ describe('ItemsComponent', () => {
       expect(itemsFacade.removeToFavorite).toHaveBeenCalledWith(itemFav);
       expect(itemsFacade.setFavoriteProp).toHaveBeenCalledWith([ itemMockModel ]);
     });
+  });
+  describe('#isLoadMoreVisible', () => {
+    it('should return false', () => {
+      component.total = 0;
+      component.items = [];
+      expect(component.isLoadMoreVisible()).toEqual(false);
+    });
+    it('should return false', () => {
+      component.total = 0;
+      component.items = [ itemMockModel ];
+      expect(component.isLoadMoreVisible()).toEqual(true);
+    });
+
   });
 
 });

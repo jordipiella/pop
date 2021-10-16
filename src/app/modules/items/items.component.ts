@@ -137,4 +137,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
     this.itemsFacade.setFavoriteProp(this.items);
   }
+
+  isLoadMoreVisible(): boolean {
+    return (this.total !== this.items?.length);
+  }
 }
