@@ -9,6 +9,7 @@ import { AppFacade } from '../services/app.facade';
 import { ViewContainerRef } from '@angular/core';
 import { ViewContainerRefMock } from '@core';
 import { provideMockStore } from '@ngrx/store/testing';
+import { FormBuilder } from '@angular/forms';
 
 const initialState: unknown = {
   data: []
@@ -33,6 +34,7 @@ describe('ModalComponent', () => {
       ],
       providers: [
         TranslateService,
+        FormBuilder,
         provideMockStore({ initialState: { favorites: initialState }})
 
       ]

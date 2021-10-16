@@ -18,6 +18,7 @@ import { FavoriteService } from '../../services/favorites/favorite.service';
 import { productMockModel } from '../../mocks/product-mock.model';
 import { AppFacade } from '../../services/app.facade';
 import { TranslateService, TranslateModule, TranslateLoader, TranslateFakeLoader } from '@ngx-translate/core';
+import { FormBuilder } from '@angular/forms';
 
 
 const initialState = {
@@ -42,6 +43,7 @@ describe('FavoritesEffects', () => {
       ],
       providers: [
         FavoritesEffects,
+        FormBuilder,
         provideMockActions(() => actions$),
         provideMockStore({ initialState }),
       ],

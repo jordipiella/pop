@@ -8,6 +8,8 @@ import { FavoritesFacade } from './favorite.facade';
 import { AppFacade } from '../../../core/services/app.facade';
 import { IFavoritesState } from '../../../core/state/favorites/favorites.reducer';
 import { ProductModel } from '../../../core/models/product.model';
+import { FormBuilder } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 describe('FavoritesFacade', () => {
   let service: FavoritesFacade;
@@ -20,8 +22,10 @@ describe('FavoritesFacade', () => {
       imports: [
         HttpClientTestingModule,
         StoreModule.forRoot(fromFavorites.reducer),
+        TranslateModule.forRoot()
       ],
       providers: [
+        FormBuilder
       ]
     });
     service = TestBed.inject(FavoritesFacade);

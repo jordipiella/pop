@@ -7,6 +7,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppFacade } from '@core';
 import * as fromFavorites from '../state/favorites/favorites.reducer';
 import { StoreModule } from '@ngrx/store';
+import { FormBuilder } from '@angular/forms';
 
 describe('ErrorIterceptor', () => {
   let errorInterceptor: ErrorInterceptor;
@@ -31,6 +32,7 @@ describe('ErrorIterceptor', () => {
         StoreModule.forRoot(fromFavorites.reducer),
       ],
       providers: [
+        FormBuilder,
         ErrorInterceptor
       ]
     });
