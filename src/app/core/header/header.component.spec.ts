@@ -5,12 +5,13 @@ import { MockComponent } from '../mocks/mock-component';
 import { AppFacade } from '../services/app.facade';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
+import { FormBuilder } from '@angular/forms';
 
 const initialState: unknown = {
   data: []
 };
 
-describe('HeaderComponnet', () => {
+describe('HeaderComponet', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let appFacade: AppFacade;
@@ -23,7 +24,8 @@ describe('HeaderComponnet', () => {
         MockComponent({ selector: 'svg-icon' })
       ],
       providers: [
-        provideMockStore({ initialState: { favorites: initialState } })
+        provideMockStore({ initialState: { favorites: initialState } }),
+        FormBuilder
       ],
       imports: [
         TranslateModule.forRoot()

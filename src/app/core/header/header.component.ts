@@ -1,6 +1,6 @@
-import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
-import { AppFacade } from '../services/app.facade';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { AppFacade } from '../services/app.facade';
 
 @Component({
   selector: 'app-header',
