@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemModel } from './models/item.model';
 import { ItemsFacade } from './services/items.facade';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { OrderEnum, IQueryParams, IApiResponse } from '@api';
@@ -19,7 +19,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   total: number = 0;
   subscriptions: Subscription[] = [];
   queryParams: IQueryParams = { _limit: 5, _page: 1 };
-  loading: Observable<boolean> = this.itemsFacade.loading$;
+  loading: boolean = false;
   options = [
     { label: 'Title', value: 'title' },
     { label: 'Description', value: 'description' },
@@ -39,11 +39,24 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.totalSub();
     this.sortSub();
     this.searchSub();
+    this.loadingSub();
     this.getAllItems(this.queryParams);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((x: Subscription) => x.unsubscribe());
+  }
+
+  loadingSub(): void {
+    const loadingSubs: Subscription = this.itemsFacade.loading$
+      .pipe(
+        tap((isLoading: boolean) => this.setLoading(isLoading))
+      ).subscribe();
+    this.subscriptions.push(loadingSubs);
+  }
+
+  setLoading(isLoading: boolean): void {
+    this.loading = (isLoading) ? true : false;
   }
 
   searchSub(): void {
@@ -94,6 +107,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
   resetList(): void {
     this.itemsFacade.resetStateItems();
     this.items = [];
+    this.queryParams._page = 1;
+    this.queryParams._limit = 5;
   }
 
   itemsSub(): void {
@@ -104,8 +119,8 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.subscriptions.push(itemsSubs);
   }
 
-  setItems(items: ItemModel[] | null): void {
-    this.items = items?.length ? [...this.items, ...items] : this.items;
+  setItems(items: ItemModel[]): void {
+    this.items = (items.length) ? [...items] : [];
   }
 
   totalSub(): void {
@@ -131,7 +146,12 @@ export class ItemsComponent implements OnInit, OnDestroy {
     }
   }
 
-  addToFavorite(item: ItemModel): void {
-    this.itemsFacade.addToFavorite(item);
+  clickToFavorite(item: ItemModel): void {
+    if (item.favorite) {
+      this.itemsFacade.removeToFavorite(item);
+    } else {
+      this.itemsFacade.addToFavorite(item);
+    }
+    this.itemsFacade.setFavoriteProp(this.items);
   }
 }

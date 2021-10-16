@@ -40,4 +40,8 @@ export class FavoriteService {
     this.modalService.openModal(FavoritesComponent, FavoritesModule);
   }
 
+  isInFavorites(item: Partial<ProductModel>): boolean {
+    const isInFav: boolean = this.favorites.some((x) => x.title === item.title);
+    return isInFav;
+  }
 }

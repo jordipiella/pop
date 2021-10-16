@@ -63,12 +63,14 @@ describe('ItemsComponent', () => {
       spyOn(component, 'totalSub');
       spyOn(component, 'sortSub');
       spyOn(component, 'searchSub');
+      spyOn(component, 'loadingSub');
       spyOn(component, 'getAllItems');
       component.ngOnInit();
-      expect(component.itemsSub).toHaveBeenCalled();
-      expect(component.totalSub).toHaveBeenCalled();
-      expect(component.sortSub).toHaveBeenCalled();
-      expect(component.searchSub).toHaveBeenCalled();
+      expect(component.itemsSub).toHaveBeenCalledTimes(1);
+      expect(component.totalSub).toHaveBeenCalledTimes(1);
+      expect(component.sortSub).toHaveBeenCalledTimes(1);
+      expect(component.searchSub).toHaveBeenCalledTimes(1);
+      expect(component.loadingSub).toHaveBeenCalledTimes(1);
       expect(component.getAllItems).toHaveBeenCalledOnceWith(queryParams);
     });
   });
@@ -79,6 +81,30 @@ describe('ItemsComponent', () => {
       spyOn(component.subscriptions[0], 'unsubscribe');
       component.ngOnDestroy();
       expect(component.subscriptions[0].unsubscribe).toHaveBeenCalled();
+    });
+  });
+
+  describe('#loadingSub', () => {
+    it('should call setLoading and push subs to Subscription[]', () => {
+      spyOn(component, 'setLoading');
+      spyOn(component.subscriptions, 'push');
+      itemsFacade.loading$ = of(true);
+      component.loadingSub();
+      expect(component.setLoading).toHaveBeenCalledWith(true);
+      expect(component.subscriptions.push).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#setLoading', () => {
+    it('should set loading to true', () => {
+      component.loading = false;
+      component.setLoading(true);
+      expect(component.loading).toEqual(true);
+    });
+    it('should set loading to false', () => {
+      component.loading = true;
+      component.setLoading(false);
+      expect(component.loading).toEqual(false);
     });
   });
 
@@ -168,6 +194,8 @@ describe('ItemsComponent', () => {
       component.resetList();
       expect(component.items).toEqual([]);
       expect(itemsFacade.resetStateItems).toHaveBeenCalled();
+      expect(component.queryParams._page).toEqual(1);
+      expect(component.queryParams._limit).toEqual(5);
     });
   });
 
@@ -190,22 +218,10 @@ describe('ItemsComponent', () => {
       expect(component.items).toEqual(items);
       // Add more items
       component.setItems(items);
-      expect(component.items).toEqual([...items, ...items]);
+      expect(component.items).toEqual([...items]);
       // Empty items
       component.setItems([]);
-      expect(component.items).toEqual([...items, ...items]);
-    });
-    it('should set component.items when is null', () => {
-      component.items = [];
-      const items: ItemModel[] = [itemMockModel];
-      component.setItems(null);
       expect(component.items).toEqual([]);
-      // Add more items
-      component.setItems(items);
-      expect(component.items).toEqual(items);
-      // Add more null items
-      component.setItems(null);
-      expect(component.items).toEqual(items);
     });
   });
 
@@ -265,6 +281,30 @@ describe('ItemsComponent', () => {
       component.loadMore();
       expect(component.getAllItems).not.toHaveBeenCalledWith(queryParams);
       expect(component.queryParams).toEqual({ _limit: 5, _page: 1 })
+    });
+  });
+
+  describe('#clickToFavorite', () => {
+    it('should call itemsFacade.addToFavorite and this.itemsFacade.setFavoriteProp', () => {
+      spyOn(itemsFacade, 'addToFavorite');
+      spyOn(itemsFacade, 'removeToFavorite');
+      spyOn(itemsFacade, 'setFavoriteProp');
+      component.items = [ itemMockModel ];
+      component.clickToFavorite(itemMockModel);
+      expect(itemsFacade.addToFavorite).toHaveBeenCalledWith(itemMockModel);
+      expect(itemsFacade.removeToFavorite).not.toHaveBeenCalled();
+      expect(itemsFacade.setFavoriteProp).toHaveBeenCalledWith([ itemMockModel ]);
+    });
+    it('should call itemsFacade.removeToFavorite and this.itemsFacade.setFavoriteProp', () => {
+      spyOn(itemsFacade, 'addToFavorite');
+      spyOn(itemsFacade, 'removeToFavorite');
+      spyOn(itemsFacade, 'setFavoriteProp');
+      component.items = [ itemMockModel ];
+      const itemFav: ItemModel = { ...itemMockModel, favorite: true };
+      component.clickToFavorite(itemFav);
+      expect(itemsFacade.addToFavorite).not.toHaveBeenCalled();
+      expect(itemsFacade.removeToFavorite).toHaveBeenCalledWith(itemFav);
+      expect(itemsFacade.setFavoriteProp).toHaveBeenCalledWith([ itemMockModel ]);
     });
   });
 

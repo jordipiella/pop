@@ -40,6 +40,10 @@ export class AppFacade {
     return this.favoriteService.favorites;
   }
 
+  isInFavorites(item: Partial<ProductModel>): boolean {
+    return this.favoriteService.isInFavorites(item);
+  }
+
   // Alerts
   successAlert(title: string, text: string): void {
     this.alertService.success(title, text);
