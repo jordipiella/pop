@@ -22,5 +22,17 @@
   "error": {
     "title": "An error has occurred",
     "text": "We have had some issues, please try again later"
+  },
+  "filters": {
+    "search": {
+      "placeholder": "Search by..."
+    },
+    "sort": {
+      "sort-by": "Sort by",
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "email": "Email"
+    }
   }
 }
