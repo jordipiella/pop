@@ -1,5 +1,6 @@
 import { Injectable, ViewContainerRef } from '@angular/core';
 import { select, Store } from '@ngrx/store';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ProductModel } from '../models/product.model';
 import { addFavorite, removeFavorite } from '../state/favorites/favorites.actions';
@@ -8,6 +9,10 @@ import { selectFavorites } from '../state/favorites/favorites.selector';
 import { AlertService } from './alert/alert.service';
 import { ModalService } from './modal/modal.service';
 import { FavoriteService } from './favorites/favorite.service';
+import { FiltersService } from './filters/filters.service';
+import { IFilter } from '../interfaces/filter.interface';
+import { FilterEnum } from '../enums/filter.enum';
+import { IFilterOption } from '../interfaces/filter-option.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +25,8 @@ export class AppFacade {
     private store: Store<IFavoritesState>,
     private alertService: AlertService,
     private modalService: ModalService,
-    private favoriteService: FavoriteService
+    private favoriteService: FavoriteService,
+    private filtersService: FiltersService
   ) { }
 
   // Favorites
@@ -69,5 +75,23 @@ export class AppFacade {
   get isOpen$(): Observable<boolean> {
     return this.modalService.isOpen$;
   }
+
+  // Filters
+  selectedFilters(): Observable<IFilter> {
+    return this.filtersService.selectedFilters$;
+  }
+
+  loadFilter(filter: FilterEnum): void {
+    this.filtersService.loadFilter(filter)
+  }
+
+  getControl(controlName: FilterEnum): FormControl {
+    return this.filtersService.getControl(controlName);
+  }
+
+  getSortByOptions(): IFilterOption[] {
+    return this.filtersService.sortByOptions;
+  }
+
 
 }
