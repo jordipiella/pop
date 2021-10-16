@@ -7,6 +7,7 @@ import { ItemModel } from '../models/item.model';
 import { selectItems, selectTotal, selectLoading } from '../state/items.selector';
 import { Observable } from 'rxjs';
 import { AppFacade } from '../../../core/services/app.facade';
+import { IFilter } from '../../../core/interfaces/filter.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,10 @@ export class ItemsFacade {
 
   setFavoriteProp(items: ItemModel[]): void {
     this.store.dispatch(setFavPropItems({ data: items }));
+  }
+
+  selectedFilters(): Observable<IFilter> {
+    return this.appFacade.selectedFilters();
   }
 
 }

@@ -11,6 +11,8 @@ import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ItemModel } from '../models/item.model';
 import { IApiResponse } from '@api';
+import { FormBuilder } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 const initialState = {
   data: [],
@@ -33,10 +35,12 @@ describe('ItemsEffects', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         ItemsEffects,
+        FormBuilder,
         provideMockActions(() => actions$),
         provideMockStore({ initialState }),
       ],

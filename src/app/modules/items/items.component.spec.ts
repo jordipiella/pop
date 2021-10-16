@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
@@ -10,6 +10,7 @@ import { itemMockModel } from './mocks/item-mock.model';
 import { ItemModel } from './models/item.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from '../../core/mocks/mock-component';
+import { IFilter } from '../../core/interfaces/filter.interface';
 
 const initialState: unknown = {
   data: [],
@@ -38,11 +39,11 @@ describe('ItemsComponent', () => {
       ],
       imports: [
         TranslateModule.forRoot(),
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        ReactiveFormsModule
       ],
       providers: [
         TranslateService,
-        ReactiveFormsModule,
         FormBuilder,
         provideMockStore({ initialState: { items: initialState }})
       ]
@@ -52,7 +53,6 @@ describe('ItemsComponent', () => {
     itemsFacade = TestBed.inject(ItemsFacade);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    component.sortForm = fb.control('');
   }));
 
   describe('#ngOnInit', () => {
@@ -61,16 +61,14 @@ describe('ItemsComponent', () => {
       component.queryParams = queryParams;
       spyOn(component, 'itemsSub');
       spyOn(component, 'totalSub');
-      spyOn(component, 'sortSub');
-      spyOn(component, 'searchSub');
       spyOn(component, 'loadingSub');
+      spyOn(component, 'filtersSub');
       spyOn(component, 'getAllItems');
       component.ngOnInit();
       expect(component.itemsSub).toHaveBeenCalledTimes(1);
       expect(component.totalSub).toHaveBeenCalledTimes(1);
-      expect(component.sortSub).toHaveBeenCalledTimes(1);
-      expect(component.searchSub).toHaveBeenCalledTimes(1);
       expect(component.loadingSub).toHaveBeenCalledTimes(1);
+      expect(component.filtersSub).toHaveBeenCalledTimes(1);
       expect(component.getAllItems).toHaveBeenCalledOnceWith(queryParams);
     });
   });
@@ -108,22 +106,28 @@ describe('ItemsComponent', () => {
     });
   });
 
-  describe('#searchSub', () => {
-    it('should call setSearch, resetList and getAllItems', fakeAsync(() => {
-      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      component.queryParams = queryParams
+  describe('#filtersSub', () => {
+    it('should ', () => {
+      const filters: IFilter = { sort: 'sort', search: 'search' };
+      spyOn(itemsFacade, 'selectedFilters').and.returnValue(of(filters));
+      spyOn(component, 'setFilterValue');
+      component.filtersSub();
+      expect(component.setFilterValue).toHaveBeenCalledOnceWith(filters);
+    });
+  });
+
+  describe('#setFilterValue', () => {
+    it('should call setSearch, setSort, resetList, getAllItems', () => {
       spyOn(component, 'setSearch');
+      spyOn(component, 'setSort');
       spyOn(component, 'resetList');
       spyOn(component, 'getAllItems');
-      spyOn(component.subscriptions, 'push');
-      component.searchSub();
-      component.searchForm.setValue('newSearch');
-      tick(600);
-      expect(component.setSearch).toHaveBeenCalledWith('newSearch');
-      expect(component.resetList).toHaveBeenCalled();
-      expect(component.getAllItems).toHaveBeenCalledWith(queryParams);
-      expect(component.subscriptions.push).toHaveBeenCalled();
-    }));
+      component.setFilterValue({ sort: 'sort', search: 'search' });
+      expect(component.setSearch).toHaveBeenCalledOnceWith('search');
+      expect(component.setSort).toHaveBeenCalledOnceWith('sort');
+      expect(component.resetList).toHaveBeenCalledTimes(1);
+      expect(component.getAllItems).toHaveBeenCalledOnceWith({ _limit: 5, _page: 1 });
+    });
   });
 
   describe('#setSearch', () => {
@@ -143,21 +147,6 @@ describe('ItemsComponent', () => {
     });
   });
 
-  describe('#sortSub', () => {
-    it('should call setSort, resetList, getAllItems and push subscription to subscriptions[]', () => {
-      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      spyOn(component, 'setSort');
-      spyOn(component, 'resetList');
-      spyOn(component, 'getAllItems');
-      spyOn(component.subscriptions, 'push');
-      component.sortSub();
-      component.sortForm.setValue('name');
-      expect(component.setSort).toHaveBeenCalledWith('name');
-      expect(component.resetList).toHaveBeenCalled();
-      expect(component.getAllItems).toHaveBeenCalledWith(queryParams);
-      expect(component.subscriptions.push).toHaveBeenCalled();
-    });
-  });
 
   describe('#setSort', () => {
     it('should set _sort and default order asc', () => {

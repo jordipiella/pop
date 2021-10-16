@@ -11,6 +11,8 @@ import { Store, StoreModule } from '@ngrx/store';
 import * as fromItems from '../state/items.reducer';
 import { getItems, resetStateItems, setFavPropItems } from '../state/items.actions';
 import { AppFacade } from '../../../core/services/app.facade';
+import { FormBuilder } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 const itemRes: ItemModel[] = [
   itemMockModel,
@@ -34,9 +36,11 @@ describe('ItemsFacade', () => {
     TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
+        TranslateModule.forRoot(),
         StoreModule.forRoot(fromItems.reducer),
       ],
       providers: [
+        FormBuilder,
         {
           provide: ItemsService, useValue: itemService
         }

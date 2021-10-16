@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ItemModel } from './models/item.model';
 import { ItemsFacade } from './services/items.facade';
 import { Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { OrderEnum, IQueryParams, IApiResponse } from '@api';
+import { IFilter } from '../../core/interfaces/filter.interface';
 
 
 @Component({
@@ -20,26 +20,16 @@ export class ItemsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   queryParams: IQueryParams = { _limit: 5, _page: 1 };
   loading: boolean = false;
-  options = [
-    { label: 'Title', value: 'title' },
-    { label: 'Description', value: 'description' },
-    { label: 'Price', value: 'price' },
-    { label: 'Email', value: 'email' }
-  ];
-  sortForm: FormControl = this.fb.control('');
-  searchForm: FormControl = this.fb.control('');
 
   constructor(
     private itemsFacade: ItemsFacade,
-    private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.itemsSub();
     this.totalSub();
-    this.sortSub();
-    this.searchSub();
     this.loadingSub();
+    this.filtersSub();
     this.getAllItems(this.queryParams);
   }
 
@@ -59,17 +49,20 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.loading = (isLoading) ? true : false;
   }
 
-  searchSub(): void {
-    const searchSub: Subscription = this.searchForm.valueChanges
+  filtersSub(): void {
+    const filtSubs: Subscription = this.itemsFacade.selectedFilters()
       .pipe(
-        filter((value: string) => value.length > 2 || !value),
-        debounceTime(500),
-        distinctUntilChanged(),
-        tap((value: string) => this.setSearch(value)),
-        tap(() => this.resetList()),
-        tap(() => this.getAllItems(this.queryParams))
+        distinctUntilChanged((acc: IFilter, curr: IFilter) => (acc.search === curr.search) && (acc.sort === curr.sort)),
+        tap((filters: IFilter) => this.setFilterValue(filters))
       ).subscribe();
-    this.subscriptions.push(searchSub);
+    this.subscriptions.push(filtSubs);
+  }
+
+  setFilterValue(filterValues: any): void {
+    this.setSearch(filterValues?.search);
+    this.setSort(filterValues?.sort);
+    this.resetList();
+    this.getAllItems(this.queryParams);
   }
 
   setSearch(value: string): void {
@@ -78,16 +71,6 @@ export class ItemsComponent implements OnInit, OnDestroy {
       return;
     }
     this.queryParams.q = value;
-  }
-
-  sortSub(): void {
-    const sortSub: Subscription = this.sortForm.valueChanges
-      .pipe(
-        tap((value: string) => this.setSort(value)),
-        tap(() => this.resetList()),
-        tap(() => this.getAllItems(this.queryParams))
-      ).subscribe();
-    this.subscriptions.push(sortSub);
   }
 
   setSort(value: string): void {

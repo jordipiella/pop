@@ -14,6 +14,8 @@ import { ItemModel } from '../../models/item.model';
 import { ItemTranslator } from '../../translate/item.translator';
 import { provideMockStore } from '@ngrx/store/testing';
 import { AppFacade } from '../../../../core/services/app.facade';
+import { FormBuilder } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 const initialState: unknown = {
   data: [],
@@ -44,10 +46,12 @@ describe('ItemsService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TranslateModule.forRoot()
       ],
       providers: [
         ApiItemsService,
+        FormBuilder,
         provideMockStore({ initialState: { items: initialState }})
 
       ]
