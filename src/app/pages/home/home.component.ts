@@ -9,8 +9,8 @@ import { FilterEnum } from '@core';
 export class HomeComponent {
 
   activeFilters: FilterEnum[] = [
-    FilterEnum.sort,
-    FilterEnum.search
+    FilterEnum.search,
+    FilterEnum.sort
   ];
 
   constructor() { }

@@ -1,7 +1,9 @@
-<ng-container *ngFor="let filter of filtersConfig">
-  <ng-container *ngTemplateOutlet="getTemplate(filter)">
+<div class="my-5">
+  <ng-container *ngFor="let filter of filtersConfig">
+      <ng-container *ngTemplateOutlet="getTemplate(filter)">
+      </ng-container>
   </ng-container>
-</ng-container>
+</div>
 
 <ng-template #sort>
   <app-dropdown
