@@ -10,10 +10,12 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { FavoritesEffects } from './state/favorites/favorites.effects';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
-    HeaderComponent
+    HeaderComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,8 @@ import { ErrorInterceptor } from './interceptors/error.interceptor';
     EffectsModule.forFeature([FavoritesEffects])
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    ModalComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true  }

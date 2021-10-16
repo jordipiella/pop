@@ -6,14 +6,17 @@ export * from './api.module';
 export * from './services/api-items/api-items.service';
 
 // Contracts
-export * from './services/api-items/contracts/item.contract';
+export * from './contracts/item.contract';
 
 // Enums
 export * from './enums/order.enum';
 
-// Contracts
-export * from './services/api-items/mocks/item-mock.contract';
+// Mocks
+export * from './mocks/item-mock.contract';
 
 // Interfaces
-export * from './interfaces/pagination.interface';
+export * from './interfaces/query-params.interface';
 export * from './interfaces/response.interface';
+
+// Constants
+export * from './constants/api.constants'

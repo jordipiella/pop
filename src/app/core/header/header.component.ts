@@ -1,20 +1,27 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, OnInit } from '@angular/core';
+import { AppFacade } from '../services/app.facade';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  @Input() title: string = '';
-  @Output() eventClick: EventEmitter<string> = new EventEmitter<string>();
+  title: string = '';
 
   constructor(
+    private appFacade: AppFacade,
+    private translate: TranslateService
   ) { }
 
-  clickEvent(value: string): void {
-    this.eventClick.emit(value)
+  ngOnInit(): void {
+    this.title = this.translate.instant('header.title');
+  }
+
+  openFavoriteModal(): void {
+    this.appFacade.openFavoritesModal();
   }
 
 }

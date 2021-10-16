@@ -1,11 +1,11 @@
 import { createReducer, on } from '@ngrx/store';
-import { FavoriteModel } from '../../services/favorites/models/favorite.model';
+import { ProductModel } from '../../models/product.model';
 import * as favoritesAction from './favorites.actions';
 
 export const favoritesFeatureKey: string = 'favorites';
 
 export interface IFavoritesState {
-    data: FavoriteModel[]
+    data: ProductModel[]
 }
 
 const initialState: IFavoritesState = {

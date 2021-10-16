@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as itemAction from './items.actions';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ItemModel } from '../services/items/models/item.model';
+import { ItemModel } from '../models/item.model';
 
 export const itemsFeatureKey: string = 'items';
 

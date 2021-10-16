@@ -4,14 +4,19 @@ import { Store, StoreModule } from '@ngrx/store';
 import { AppFacade } from './app.facade';
 import { IFavoritesState } from '../state/favorites/favorites.reducer';
 import * as fromFavorites from '../state/favorites/favorites.reducer';
-import { favoriteMockModel } from './favorites/mocks/favorites-mock.model';
+import { productMockModel } from '../mocks/product-mock.model';
 import { addFavorite, removeFavorite } from '../state/favorites/favorites.actions';
 import { AlertService } from './alert/alert.service';
+import { ModalService } from './modal/modal.service';
+import { ViewContainerRef } from '@angular/core';
+import { ViewContainerRefMock } from '@core';
+import { of } from 'rxjs';
 
 describe('AppFacade', () => {
   let service: AppFacade;
   let store: Store<IFavoritesState>;
   let alertService: AlertService;
+  let modalService: ModalService;
 
 
   beforeEach(() => {
@@ -26,21 +31,22 @@ describe('AppFacade', () => {
     service = TestBed.inject(AppFacade);
     store = TestBed.inject(Store);
     alertService = TestBed.inject(AlertService);
+    modalService = TestBed.inject(ModalService);
   });
 
   describe('#addFavorite()', () => {
     it('should call should call store.dispatch with addFavorite', () => {
       spyOn(store, 'dispatch');
-      service.addFavorite(favoriteMockModel);
-      expect(store.dispatch).toHaveBeenCalledWith(addFavorite({ data: [ favoriteMockModel ] }));
+      service.addFavorite(productMockModel);
+      expect(store.dispatch).toHaveBeenCalledWith(addFavorite({ data: [ productMockModel ] }));
     });
   });
 
   describe('#removeFavorite()', () => {
     it('should call store.dispatch with removeFavorite', () => {
       spyOn(store, 'dispatch');
-      service.removeFavorite(favoriteMockModel);
-      expect(store.dispatch).toHaveBeenCalledWith(removeFavorite({ data: [ favoriteMockModel ]}));
+      service.removeFavorite(productMockModel);
+      expect(store.dispatch).toHaveBeenCalledWith(removeFavorite({ data: [ productMockModel ]}));
     });
   });
 
@@ -61,6 +67,49 @@ describe('AppFacade', () => {
       spyOn(alertService, 'error');
       service.errorAlert(title, text);
       expect(alertService.error).toHaveBeenCalledWith(title, text);
+    });
+  });
+
+  describe('#openModal()', () => {
+    it('should call modalService.openModal with component, module', () => {
+      const component: any = { component: 'component' };
+      const module: any = { module: 'module' };
+      spyOn(modalService, 'openModal');
+      service.openModal(component, module);
+      expect(modalService.openModal).toHaveBeenCalledWith(component, module);
+    });
+    it('should call modalService.openModal with component, null', () => {
+      const component: any = { component: 'component' };
+      spyOn(modalService, 'openModal');
+      service.openModal(component, null);
+      expect(modalService.openModal).toHaveBeenCalledWith(component, null);
+    });
+  });
+
+  describe('#closeModal()', () => {
+    it('should call modalService.closeModal', () => {
+      spyOn(modalService, 'closeModal');
+      service.closeModal();
+      expect(modalService.closeModal).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#modalOpened()', () => {
+    it('should call modalService.modalOpened', () => {
+      const ref: ViewContainerRef = new ViewContainerRefMock();
+      spyOn(modalService, 'modalOpened');
+      service.modalOpened(ref);
+      expect(modalService.modalOpened).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#get isOpen$', () => {
+    it('should return Observable<boolean>', () => {
+      modalService.isOpen$ = of(true);
+      service.isOpen$
+        .subscribe((res) => {
+          expect(res).toEqual(true);
+        });
     });
   });
 

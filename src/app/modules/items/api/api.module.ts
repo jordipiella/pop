@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ApiItemsService } from './services/api-items/api-items.service';
 
 
 
@@ -9,6 +10,7 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ],
   providers: [
+    ApiItemsService
   ]
 })
 export class ApiModule { }

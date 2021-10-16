@@ -9,8 +9,6 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { FavoritesComponent } from './favorites.component';
 import { FavoriteCardComponent } from './components/favorite-card/favorite-card.component';
-import { CoreModule } from '../../core/core.module';
-
 
 
 @NgModule({
@@ -30,8 +28,7 @@ import { CoreModule } from '../../core/core.module';
     }),
     SharedModule,
     AngularSvgIconModule,
-    ReactiveFormsModule,
-    CoreModule
+    ReactiveFormsModule
   ],
   providers: [
     FormBuilder

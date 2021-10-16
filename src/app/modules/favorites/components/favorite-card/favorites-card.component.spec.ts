@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FavoriteCardComponent } from './favorite-card.component';
-import { MockComponent, favoriteMockModel } from '@core';
+import { MockComponent, productMockModel } from '@core';
 
 
 describe('FavoritesCardComponent', () => {
@@ -31,8 +31,8 @@ describe('FavoritesCardComponent', () => {
   describe('#removeFavorite', () => {
     it('should call clickToRemove.emit', () => {
       spyOn(component.clickToRemove, 'emit');
-      component.removeFavorite(favoriteMockModel);
-      expect(component.clickToRemove.emit).toHaveBeenCalledWith(favoriteMockModel);
+      component.removeFavorite(productMockModel);
+      expect(component.clickToRemove.emit).toHaveBeenCalledWith(productMockModel);
     });
   });
 

@@ -6,8 +6,8 @@ import { of } from 'rxjs';
 import { IQueryParams } from '@api';
 import { ItemsComponent } from './items.component';
 import { ItemsFacade } from './services/items.facade';
-import { itemMockModel } from './services/items/mocks/item-mock.model';
-import { ItemModel } from './services/items/models/item.model';
+import { itemMockModel } from './mocks/item-mock.model';
+import { ItemModel } from './models/item.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from '../../core/mocks/mock-component';
 

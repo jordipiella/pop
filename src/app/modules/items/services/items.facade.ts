@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { IQueryParams } from '../../api/interfaces/pagination.interface';
+import { IQueryParams } from '@api';
 import { getItems, resetStateItems } from '../state/items.actions';
 import { ItemsState } from '../state/items.reducer';
-import { ItemModel } from './items/models/item.model';
+import { ItemModel } from '../models/item.model';
 import { selectItems, selectTotal, selectLoading } from '../state/items.selector';
 import { Observable } from 'rxjs';
 import { AppFacade } from '../../../core/services/app.facade';

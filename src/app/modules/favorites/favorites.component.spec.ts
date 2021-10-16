@@ -5,7 +5,7 @@ import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FavoritesComponent } from './favorites.component';
 import { of } from 'rxjs';
-import { favoriteMockModel, MockComponent, FavoriteModel } from '@core';
+import { productMockModel, MockComponent, ProductModel } from '@core';
 import { FavoritesFacade } from './services/favorite.facade';
 
 const initialState: unknown = {
@@ -67,19 +67,19 @@ describe('FavoritesComponent', () => {
 
   describe('#getFavorites', () => {
     it('should ', fakeAsync(() => {
-      spyOnProperty(favFacade, 'favorites$', 'get').and.returnValue(of([ favoriteMockModel ]));
+      spyOnProperty(favFacade, 'favorites$', 'get').and.returnValue(of([ productMockModel ]));
       spyOn(component, 'setFavorites');
       spyOn(component, 'setSearch');
       component.getFavorites();
       tick(10);
-      expect(component.setFavorites).toHaveBeenCalledWith([ favoriteMockModel ]);
+      expect(component.setFavorites).toHaveBeenCalledWith([ productMockModel ]);
       expect(component.setSearch).toHaveBeenCalledWith('');
     }));
   });
 
   describe('#setFavorites', () => {
     it('should set favorites and AllFavorites ', () => {
-      const favArray: FavoriteModel[] = [ favoriteMockModel ];
+      const favArray: ProductModel[] = [ productMockModel ];
       component.favorites = [];
       component.allFavorites = [];
       component.setFavorites(favArray);
@@ -102,7 +102,7 @@ describe('FavoritesComponent', () => {
 
   describe('#setSearch', () => {
     it('should call set favorites if value is ``', () => {
-      const favArray: FavoriteModel[] = [ favoriteMockModel ];
+      const favArray: ProductModel[] = [ productMockModel ];
       component.allFavorites = favArray;
       spyOn(component, 'setFavorites');
       spyOn(component, 'filterFavorites');
@@ -111,7 +111,7 @@ describe('FavoritesComponent', () => {
       expect(component.filterFavorites).not.toHaveBeenCalled();
     });
     it('should call filterFavorites if value isn`t ``', () => {
-      const favArray: FavoriteModel[] = [ favoriteMockModel ];
+      const favArray: ProductModel[] = [ productMockModel ];
       component.allFavorites = favArray;
       spyOn(component, 'setFavorites');
       spyOn(component, 'filterFavorites');
@@ -122,8 +122,8 @@ describe('FavoritesComponent', () => {
   });
 
   describe('#filterFavorites', () => {
-    it('should return favoriteModel[] filtered by title', () => {
-      const favArray: FavoriteModel[] = [ favoriteMockModel ];
+    it('should return ProductModel[] filtered by title', () => {
+      const favArray: ProductModel[] = [ productMockModel ];
       expect(component.filterFavorites(favArray, 'Cá')).toEqual(favArray);
       expect(component.filterFavorites(favArray, 'casc')).toEqual(favArray);
       expect(component.filterFavorites(favArray, 'cÀ')).toEqual(favArray);
@@ -136,8 +136,8 @@ describe('FavoritesComponent', () => {
   describe('#removeFavorite', () => {
     it('should call favoritesFacade.removeFavorite', () => {
       spyOn(favFacade, 'removeFavorite');
-      component.removeFavorite(favoriteMockModel);
-      expect(favFacade.removeFavorite).toHaveBeenCalledWith(favoriteMockModel);
+      component.removeFavorite(productMockModel);
+      expect(favFacade.removeFavorite).toHaveBeenCalledWith(productMockModel);
     });
   });
 

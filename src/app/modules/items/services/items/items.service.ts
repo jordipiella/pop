@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
-import { ApiItemsService } from '@api';
-import { IQueryParams } from '../../../api/interfaces/pagination.interface';
-import { ItemModel } from './models/item.model';
-import { ItemContract } from '../../../api/services/api-items/contracts/item.contract';
+import { ItemModel } from '../../models/item.model';
 import { map } from 'rxjs/operators';
-import { IApiResponse } from '@api';
 import { Observable } from 'rxjs';
-import { ItemTranslator } from './translate/item.translator';
+import { ItemTranslator } from '../../translate/item.translator';
+import { IApiResponse, ApiItemsService, IQueryParams, ItemContract } from '@api';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +21,7 @@ export class ItemsService {
           if (apiRes?.data?.length) {
             apiRes.data = apiRes.data.map((x: ItemContract) => ItemTranslator.translateContractToModel(x));
           }
-          return apiRes;
+          return { ...apiRes } as IApiResponse<ItemModel>;
         })
       );
   }
