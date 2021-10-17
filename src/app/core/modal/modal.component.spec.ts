@@ -127,4 +127,21 @@ describe('ModalComponent', () => {
     });
   });
 
+  describe('#clickOuside', () => {
+    it('should call close()', () => {
+      spyOn(component, 'close');
+      component.clickOuside({ id: 'modalBack' });
+      expect(component.close).toHaveBeenCalled();
+    });
+    it('should don`t call close()', () => {
+      spyOn(component, 'close');
+      component.clickOuside({ });
+      expect(component.close).not.toHaveBeenCalled();
+      component.clickOuside({ id: 'other' });
+      expect(component.close).not.toHaveBeenCalled();
+      component.clickOuside(null);
+      expect(component.close).not.toHaveBeenCalled();
+    });
+  });
+
 });
