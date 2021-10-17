@@ -1,0 +1,21 @@
+<div class="my-5 px-2">
+  <ng-container *ngFor="let filter of filtersConfig">
+      <ng-container *ngTemplateOutlet="getTemplate(filter)">
+      </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #sort>
+  <app-dropdown
+    [formControl]="getControl(FilterEnum.sort)"
+    [options]="sortByOptions"
+    [emptyOption]="'filters.sort.sort-by' | translate">
+  </app-dropdown>
+</ng-template>
+
+<ng-template #search>
+  <app-search [formControl]="getControl(FilterEnum.search)" [placeholder]="'actions.search' | translate"></app-search>
+</ng-template>
+
+<ng-template #empty>
+</ng-template>

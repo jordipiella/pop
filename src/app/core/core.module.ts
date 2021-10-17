@@ -11,11 +11,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { FavoritesEffects } from './state/favorites/favorites.effects';
 import { ErrorInterceptor } from './interceptors/error.interceptor';
 import { ModalComponent } from './modal/modal.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    ModalComponent
+    ModalComponent,
+    ClickOutsideDirective
   ],
   imports: [
     CommonModule,

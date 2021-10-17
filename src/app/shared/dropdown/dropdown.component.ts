@@ -25,6 +25,9 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   disabled: boolean = false;
   subscriptions: Subscription[] = [];
+  showOption: boolean = false;
+  selected: any
+  isVisibleClean: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +45,7 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
   ngOnInit(): void {
     const valueSub: any = this.form?.get('optionSelected')?.valueChanges
       .pipe(
-        tap((value: any) => this.onChanged(value))
+        tap((value: any) => this.onChanged(value)),
       ).subscribe()
     this.subscriptions.push(valueSub);
   }
@@ -70,6 +73,23 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled = isDisabled;
+  }
+
+  toggle(): void {
+    this.showOption = !this.showOption;
+  }
+
+  optionClicked(option: any): void {
+    this.form.get('optionSelected')?.setValue(option[this.labelValue]);
+    this.selected = option[this.label];
+    this.isVisibleClean = true;
+    this.toggle();
+  }
+
+  clean(): void {
+    this.form.get('optionSelected')?.reset();
+    this.selected = null;
+    this.isVisibleClean = false;
   }
 
 }

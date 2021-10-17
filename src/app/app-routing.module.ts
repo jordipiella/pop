@@ -1,19 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateResolver } from './core/resolvers/translate.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'items',
-    pathMatch: 'full'
-  },
-  {
-    path: 'items',
-    loadChildren: () => import('./modules/items/items.module').then( m => m.ItemsModule)
+    resolve: {
+      routeResolver: TranslateResolver
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/home/home.module').then( m => m.HomeModule)
+      }
+
+    ]
   },
   {
     path: '**',
-    redirectTo: 'items'
+    redirectTo: ''
   }
 ];
 

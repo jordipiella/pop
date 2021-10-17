@@ -1,20 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideMockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { FormBuilder } from '@angular/forms';
 import { HeaderComponent } from './header.component';
 import { MockComponent } from '../mocks/mock-component';
 import { AppFacade } from '../services/app.facade';
-import { provideMockStore } from '@ngrx/store/testing';
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
 
 const initialState: unknown = {
   data: []
 };
 
-describe('HeaderComponnet', () => {
+describe('HeaderComponet', () => {
   let component: HeaderComponent;
   let fixture: ComponentFixture<HeaderComponent>;
   let appFacade: AppFacade;
-  let translate: TranslateService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -23,7 +22,8 @@ describe('HeaderComponnet', () => {
         MockComponent({ selector: 'svg-icon' })
       ],
       providers: [
-        provideMockStore({ initialState: { favorites: initialState } })
+        provideMockStore({ initialState: { favorites: initialState } }),
+        FormBuilder
       ],
       imports: [
         TranslateModule.forRoot()
@@ -31,7 +31,6 @@ describe('HeaderComponnet', () => {
     })
     .compileComponents();
     appFacade = TestBed.inject(AppFacade);
-    translate = TestBed.inject(TranslateService);
   });
 
   beforeEach(() => {
@@ -40,13 +39,6 @@ describe('HeaderComponnet', () => {
     fixture.detectChanges();
   });
 
-  describe('#ngOnInit', () => {
-    it('should call translate.instant withheader.title', () => {
-      spyOn(translate, 'instant');
-      component.ngOnInit();
-      expect(translate.instant).toHaveBeenCalledWith('header.title')
-    })
-  })
 
   describe('#openFavoritesModal', () => {
     it('should call appFacade.openFavoritesModal', () => {
@@ -54,6 +46,6 @@ describe('HeaderComponnet', () => {
       component.openFavoriteModal();
       expect(appFacade.openFavoritesModal).toHaveBeenCalled()
     })
-  })
+  });
 
 });

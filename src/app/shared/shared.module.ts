@@ -10,7 +10,7 @@ import { BadgeComponent } from './badge/badge.component';
 import { DropDownComponent } from './dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
-import { AngularSvgIconModule } from 'angular-svg-icon';
+import { LoadMoreComponent } from './load-more/load-more.component';
 
 
 @NgModule({
@@ -21,6 +21,7 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     BadgeComponent,
     DropDownComponent,
     SearchComponent,
+    LoadMoreComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +33,6 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
       }
     }),
     ReactiveFormsModule,
-    AngularSvgIconModule
   ],
   exports: [
     CardComponent,
@@ -40,7 +40,8 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
     GridComponent,
     BadgeComponent,
     DropDownComponent,
-    SearchComponent
+    SearchComponent,
+    LoadMoreComponent
   ]
 })
 export class SharedModule { }

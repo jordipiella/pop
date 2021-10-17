@@ -65,4 +65,10 @@ export class ModalComponent implements OnInit, OnDestroy {
     this.appFacade.closeModal();
   }
 
+  clickOuside(event: any): void {
+    if (event?.id === 'modalBack') {
+      this.close();
+    }
+  }
+
 }
