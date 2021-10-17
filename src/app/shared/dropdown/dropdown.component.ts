@@ -27,6 +27,7 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
   subscriptions: Subscription[] = [];
   showOption: boolean = false;
   selected: any
+  isVisibleClean: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -45,7 +46,6 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
     const valueSub: any = this.form?.get('optionSelected')?.valueChanges
       .pipe(
         tap((value: any) => this.onChanged(value)),
-        tap((value: any) => this.selected = value[this.label])
       ).subscribe()
     this.subscriptions.push(valueSub);
   }
@@ -80,8 +80,16 @@ export class DropDownComponent implements OnInit, OnDestroy, ControlValueAccesso
   }
 
   optionClicked(option: any): void {
-    this.form.get('optionSelected')?.setValue(option.value);
+    this.form.get('optionSelected')?.setValue(option[this.labelValue]);
+    this.selected = option[this.label];
+    this.isVisibleClean = true;
     this.toggle();
+  }
+
+  clean(): void {
+    this.form.get('optionSelected')?.reset();
+    this.selected = null;
+    this.isVisibleClean = false;
   }
 
 }
