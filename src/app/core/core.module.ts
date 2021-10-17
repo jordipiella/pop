@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -40,4 +40,10 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true  }
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+  constructor(@Optional() @SkipSelf() core: CoreModule ) {
+    if (core) {
+        throw new Error('You should import core module only in the root module');
+    }
+  }
+}
