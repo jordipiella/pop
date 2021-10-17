@@ -12,6 +12,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { LoadMoreComponent } from './load-more/load-more.component';
 import { TooltipComponent } from './tooltip/tooltip.component';
+import { SkeletonCardComponent } from './skeleton-card/skeleton-card.component';
+import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     DropDownComponent,
     SearchComponent,
     LoadMoreComponent,
-    TooltipComponent
+    TooltipComponent,
+    SkeletonCardComponent,
+    NumberToArrayPipe
   ],
   imports: [
     CommonModule,
@@ -44,7 +48,9 @@ import { TooltipComponent } from './tooltip/tooltip.component';
     DropDownComponent,
     SearchComponent,
     LoadMoreComponent,
-    TooltipComponent
+    TooltipComponent,
+    SkeletonCardComponent,
+    NumberToArrayPipe
   ]
 })
 export class SharedModule { }
