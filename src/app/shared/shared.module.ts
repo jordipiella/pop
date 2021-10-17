@@ -10,7 +10,6 @@ import { BadgeComponent } from './badge/badge.component';
 import { DropDownComponent } from './dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
-import { AngularSvgIconModule } from 'angular-svg-icon';
 import { LoadMoreComponent } from './load-more/load-more.component';
 
 
@@ -34,7 +33,6 @@ import { LoadMoreComponent } from './load-more/load-more.component';
       }
     }),
     ReactiveFormsModule,
-    AngularSvgIconModule
   ],
   exports: [
     CardComponent,
