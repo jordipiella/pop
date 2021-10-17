@@ -3,6 +3,11 @@
     <app-item-card [item]="item" (clickToFavorite)="clickToFavorite($event)"></app-item-card>
   </ng-container>
 </app-grid>
+<app-grid *ngIf="loading">
+  <ng-container *ngFor="let key of queryParams._limit | numberToArray">
+    <app-skeleton-card></app-skeleton-card>
+  </ng-container>
+</app-grid>
 
 <div *ngIf="isLoadMoreVisible()" class="text-center">
   <app-load-more [text]="'actions.load-more' | translate" [loading]="loading" (clickLoadMore)="loadMore()"></app-load-more>
