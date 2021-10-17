@@ -1,10 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TranslateResolver } from './core/resolvers/translate.resolver';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomeModule)
+    resolve: {
+      routeResolver: TranslateResolver
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/home/home.module').then( m => m.HomeModule)
+      }
+
+    ]
   },
   {
     path: '**',
