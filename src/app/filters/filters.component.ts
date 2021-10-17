@@ -1,6 +1,7 @@
 import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AppFacade, FilterEnum, IFilterOption } from '@core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-filters',
@@ -18,8 +19,10 @@ export class FiltersComponent {
   sortByOptions: IFilterOption[] = [];
 
   constructor(
-    private appFacade: AppFacade
-  ) { }
+    private appFacade: AppFacade,
+    private translate: TranslateService
+  ) {
+  }
 
   getTemplate(template: FilterEnum): TemplateRef<any> {
     switch (template) {
@@ -27,8 +30,8 @@ export class FiltersComponent {
         this.appFacade.loadFilter(FilterEnum.search);
         return this.search;
         case FilterEnum.sort:
-        this.setSortByOptions();
-        this.appFacade.loadFilter(FilterEnum.sort);
+          this.setSortByOptions();
+          this.appFacade.loadFilter(FilterEnum.sort);
         return this.sort;
       default:
         return this.empty;
@@ -40,7 +43,11 @@ export class FiltersComponent {
   }
 
   setSortByOptions(): void {
-    this.sortByOptions = this.appFacade.getSortByOptions();
+    const options: IFilterOption[] = this.appFacade.getSortByOptions();
+    this.sortByOptions = options.map((option: IFilterOption) => {
+      option.label = this.translate.instant(option.label);
+      return option;
+    });
   }
 
 }

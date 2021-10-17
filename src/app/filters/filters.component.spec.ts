@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { provideMockStore } from '@ngrx/store/testing';
-import { FiltersComponent } from './filters.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FilterEnum } from '@core';
+import { FiltersComponent } from './filters.component';
 import { AppFacade } from '../core/services/app.facade';
 import { IFilterOption } from '../core/interfaces/filter-option.interface';
 
@@ -13,6 +13,8 @@ describe('FiltersComponent', () => {
   let component: FiltersComponent;
   let fixture: ComponentFixture<FiltersComponent>;
   let appFacade: AppFacade;
+  let translate: TranslateService;
+
   const initialState: unknown = {
     data: []
   };
@@ -39,6 +41,7 @@ describe('FiltersComponent', () => {
     fixture = TestBed.createComponent(FiltersComponent);
     component = fixture.componentInstance;
     appFacade = TestBed.inject(AppFacade);
+    translate = TestBed.inject(TranslateService);
     fixture.detectChanges();
   });
 
@@ -71,10 +74,12 @@ describe('FiltersComponent', () => {
           label: 'label',
           value: 'value' }
       ];
+      spyOn(translate, 'instant');
       spyOn(appFacade, 'getSortByOptions').and.returnValue(options);
       component.setSortByOptions();
       expect(component.sortByOptions).toEqual(options);
       expect(appFacade.getSortByOptions).toHaveBeenCalledTimes(1);
+      expect(translate.instant).toHaveBeenCalledOnceWith('label');
     });
-  })
+  });
 });

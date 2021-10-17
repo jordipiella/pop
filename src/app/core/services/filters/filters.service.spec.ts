@@ -45,6 +45,7 @@ describe('FiltersService', () => {
 
   describe('#searchSub', () => {
     it('should call setSelected with FilterEnum.search, value', fakeAsync(() => {
+      service.searchLoaded = false;
       const searchForm: FormControl = fb.control('');
       service.searchForm = searchForm;
       spyOn(service, 'setSelected');
@@ -54,6 +55,20 @@ describe('FiltersService', () => {
       tick(600);
       expect(service.setSelected).toHaveBeenCalledOnceWith(FilterEnum.search, 'value');
       expect(service.subscriptions.push).toHaveBeenCalledTimes(1);
+      expect(service.searchLoaded).toEqual(true);
+    }));
+    it('should don`t call setSelected if searchLoaded = true', fakeAsync(() => {
+      service.searchLoaded = true;
+      const searchForm: FormControl = fb.control('');
+      service.searchForm = searchForm;
+      spyOn(service, 'setSelected');
+      spyOn(service.subscriptions, 'push');
+      service.searchSub();
+      service.searchForm.setValue('value');
+      tick(600);
+      expect(service.setSelected).not.toHaveBeenCalled();
+      expect(service.subscriptions.push).not.toHaveBeenCalled();
+      expect(service.searchLoaded).toEqual(true);
     }));
   })
 
@@ -67,6 +82,7 @@ describe('FiltersService', () => {
 
   describe('#sortSub', () => {
     it('should call setSelected with FilterEnum.sort, value', fakeAsync(() => {
+      service.sortLoaded = false;
       const sortForm: FormControl = fb.control('');
       service.searchForm = sortForm;
       spyOn(service, 'setSelected');
@@ -76,6 +92,20 @@ describe('FiltersService', () => {
       tick(600);
       expect(service.setSelected).toHaveBeenCalledOnceWith(FilterEnum.sort, 'value');
       expect(service.subscriptions.push).toHaveBeenCalledTimes(1);
+      expect(service.sortLoaded).toEqual(true);
+    }));
+    it('should call setSelected  if sortLoaded = true', fakeAsync(() => {
+      service.sortLoaded = true;
+      const sortForm: FormControl = fb.control('');
+      service.searchForm = sortForm;
+      spyOn(service, 'setSelected');
+      spyOn(service.subscriptions, 'push');
+      service.sortSub();
+      service.sortForm.setValue('value');
+      tick(600);
+      expect(service.setSelected).not.toHaveBeenCalled();
+      expect(service.subscriptions.push).not.toHaveBeenCalled();
+      expect(service.sortLoaded).toEqual(true);
     }));
   })
 

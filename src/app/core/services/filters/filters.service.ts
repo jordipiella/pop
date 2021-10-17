@@ -1,16 +1,12 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { FilterEnum } from '../../enums/filter.enum';
 import { IFilter } from '../../interfaces/filter.interface';
 import { IMap } from '../../interfaces/map.interface';
 import { IFilterOption } from '../../interfaces/filter-option.interface';
-
-
-
-
+import { SORT_OPTIONS } from '../../constants/sort-options.constants';
 
 @Injectable({
   providedIn: 'root'
@@ -22,20 +18,16 @@ export class FiltersService {
   sortForm: FormControl = this.fb.control('');
   searchForm: FormControl = this.fb.control('');
   subscriptions: Subscription[] = [];
-  sortByOptions: IFilterOption[] = [
-    { label: this.translate.instant('filters.sort.title'), value: 'title' },
-    { label: this.translate.instant('filters.sort.description'), value: 'description' },
-    { label: this.translate.instant('filters.sort.price'), value: 'price' },
-    { label: this.translate.instant('filters.sort.email'), value: 'email' }
-  ];
+  sortByOptions: IFilterOption[] = SORT_OPTIONS;
+  searchLoaded: boolean = false;
+  sortLoaded: boolean = false;
 
   private _selectedFilters: BehaviorSubject<IFilter> = new BehaviorSubject({});
   selectedFilters$: Observable<IFilter> = this._selectedFilters.asObservable();
 
 
   constructor(
-    private fb: FormBuilder,
-    private translate: TranslateService
+    private fb: FormBuilder
   ) { }
 
   set filterSelected(val: IMap) {
@@ -60,6 +52,10 @@ export class FiltersService {
   }
 
   searchSub(): void {
+    if (this.searchLoaded) {
+      return;
+    }
+    this.searchLoaded = true;
     const searchSub: Subscription = this.searchForm.valueChanges
       .pipe(
         filter((value: string) => value.length > 2 || !value),
@@ -77,6 +73,10 @@ export class FiltersService {
   }
 
   sortSub(): void {
+    if (this.sortLoaded) {
+      return;
+    }
+    this.sortLoaded = true;
     const sortSub: Subscription = this.sortForm.valueChanges
       .pipe(
         tap((value: string) => this.setSelected(FilterEnum.sort, value)),
