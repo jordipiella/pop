@@ -8,7 +8,7 @@ import { AppFacade } from '../services/app.facade';
 })
 export class HeaderComponent {
 
-  title: string = '';
+  title: string = 'header.title';
 
   constructor(
     private appFacade: AppFacade
