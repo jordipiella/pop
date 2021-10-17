@@ -11,6 +11,7 @@ import { DropDownComponent } from './dropdown/dropdown.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchComponent } from './search/search.component';
 import { LoadMoreComponent } from './load-more/load-more.component';
+import { TooltipComponent } from './tooltip/tooltip.component';
 import { SkeletonCardComponent } from './skeleton-card/skeleton-card.component';
 import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
 
@@ -24,6 +25,7 @@ import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
     DropDownComponent,
     SearchComponent,
     LoadMoreComponent,
+    TooltipComponent,
     SkeletonCardComponent,
     NumberToArrayPipe
   ],
@@ -46,6 +48,7 @@ import { NumberToArrayPipe } from './pipes/number-to-array.pipe';
     DropDownComponent,
     SearchComponent,
     LoadMoreComponent,
+    TooltipComponent,
     SkeletonCardComponent,
     NumberToArrayPipe
   ]
