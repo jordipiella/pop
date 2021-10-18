@@ -1,7 +1,9 @@
-<div class="my-5 px-2">
+<div class="my-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
   <ng-container *ngFor="let filter of filtersConfig">
+    <div class="px-2">
       <ng-container *ngTemplateOutlet="getTemplate(filter)">
       </ng-container>
+    </div>
   </ng-container>
 </div>
 

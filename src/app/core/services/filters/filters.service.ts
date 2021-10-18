@@ -58,7 +58,6 @@ export class FiltersService {
     this.searchLoaded = true;
     const searchSub: Subscription = this.searchForm.valueChanges
       .pipe(
-        filter((value: string) => value.length > 2 || !value),
         debounceTime(500),
         distinctUntilChanged(),
         tap((value: string) => this.setSelected(FilterEnum.search, value)),
