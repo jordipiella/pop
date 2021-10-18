@@ -1,4 +1,4 @@
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { AppFacade, FilterEnum, IFilterOption } from '@core';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,7 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.scss']
 })
-export class FiltersComponent {
+export class FiltersComponent implements AfterViewInit {
 
   @ViewChild('empty') empty!: TemplateRef<any>;
   @ViewChild('sort') sort!: TemplateRef<any>;
@@ -20,8 +20,13 @@ export class FiltersComponent {
 
   constructor(
     private appFacade: AppFacade,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef
   ) {
+  }
+
+  ngAfterViewInit(): void {
+    this.cdr.detectChanges();
   }
 
   getTemplate(template: FilterEnum): TemplateRef<any> {

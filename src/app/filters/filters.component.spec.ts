@@ -6,6 +6,7 @@ import { FilterEnum } from '@core';
 import { FiltersComponent } from './filters.component';
 import { AppFacade } from '../core/services/app.facade';
 import { IFilterOption } from '../core/interfaces/filter-option.interface';
+import { ChangeDetectorRef } from '@angular/core';
 
 const fb: FormBuilder = new FormBuilder();
 
@@ -30,6 +31,7 @@ describe('FiltersComponent', () => {
       ],
       providers: [
         FormBuilder,
+        ChangeDetectorRef,
         provideMockStore({ initialState: { favorites: initialState } })
 
       ]
@@ -45,6 +47,15 @@ describe('FiltersComponent', () => {
     fixture.detectChanges();
   });
 
+  describe('#ngAfterViewInit', () => {
+    it('should call appFacade.loadFilter with FilterEnum.search and return search', () => {
+      const changeDetectorRef: ChangeDetectorRef = fixture.debugElement.injector.get(ChangeDetectorRef);
+      const spy: jasmine.Spy = spyOn(changeDetectorRef.constructor.prototype, 'detectChanges');
+      component.ngAfterViewInit();
+      expect(spy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('#getTemplate', () => {
     it('should call appFacade.loadFilter with FilterEnum.search and return search', () => {
       spyOn(appFacade, 'loadFilter');
@@ -56,7 +67,7 @@ describe('FiltersComponent', () => {
       expect(component.getTemplate(FilterEnum.sort)).toEqual(component.sort);
       expect(appFacade.loadFilter).toHaveBeenCalledOnceWith(FilterEnum.sort);
     });
-  })
+  });
 
   describe('#getControl', () => {
     it('should call appFacade.getControl and return control', () => {
