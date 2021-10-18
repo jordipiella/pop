@@ -25,7 +25,7 @@ npm run server
 ```
 
 
-By defaults in PORT 3000, if you want to change PORT `run json-server --watch db/db.json --delay 1000 --port [your-port]` and change `apiItemsUrl: 3000` in environment
+By defaults in PORT 3000, if you want to change PORT execute `run json-server --watch db/db.json --delay 1000 --port [your-port]` and change `apiItemsUrl: [your-port]` in environment files.
 
 
 ### Run project
@@ -36,13 +36,13 @@ npm run start
 
 Open http:// localhost:4200
 
-## Running unit tests
+## Running unit tests with code coverage
 
-Run `ng test --code-coverage` to execute the unit tests via [Karma]
+Run `mpm run test` to execute the unit tests via [Karma] 
 
 ## Running end-to-end tests with Cypress
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run `mpm run  e2e` to execute the end-to-end with [Cypress]
 
 
 
