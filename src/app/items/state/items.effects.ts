@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { getItems, getItemsSuccess, getItemsFailure, setFavPropItems, setFavPropItemsSuccess } from './items.actions';
 import { ItemsService } from '../services/items/items.service';
 import { ItemModel } from '../models/item.model';
-import { IQueryParams, IApiResponse } from '@api';
+import { IQueryParams, IApiResponse } from 'src/app/items/api';
 
 
 @Injectable()

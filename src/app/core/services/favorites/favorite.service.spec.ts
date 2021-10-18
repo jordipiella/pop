@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { productMockModel } from '@core';
 import { FavoriteService } from './favorite.service';
 import { ProductModel } from '../../models/product.model';
-import { itemMockModel } from '../../../modules/items/mocks/item-mock.model';
+import { itemMockModel } from '../../../items/mocks/item-mock.model';
 import { ModalService } from '../modal/modal.service';
 
 describe('FavoriteService', () => {

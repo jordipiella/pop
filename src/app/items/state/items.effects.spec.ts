@@ -10,7 +10,7 @@ import { itemMockModel } from '../mocks/item-mock.model';
 import { of } from 'rxjs';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ItemModel } from '../models/item.model';
-import { IApiResponse } from '@api';
+import { IApiResponse } from 'src/app/items/api';
 import { FormBuilder } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 

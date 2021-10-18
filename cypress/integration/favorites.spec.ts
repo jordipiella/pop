@@ -1,4 +1,4 @@
-import { itemMockModel } from '../../src/app/modules/items/mocks/item-mock.model';
+import { itemMockModel } from '../../src/app/items/mocks/item-mock.model';
 
 describe('Favorites', () => {
 

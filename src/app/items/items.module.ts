@@ -9,10 +9,10 @@ import { httpLoaderFactory } from 'src/app/utils/http-loader.factory';
 import * as fromItems from './state/items.reducer';
 import { ItemsEffects } from './state/items.effects';
 import { ItemsRoutingModule } from './items-routing.module';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FiltersModule } from '../../filters/filters.module';
+import { FiltersModule } from '../filters/filters.module';
 import { ItemCardComponent } from './components/item-card/item-card.component';
 
 

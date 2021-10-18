@@ -1,4 +1,4 @@
-import { ProductModel } from '../../../core/models/product.model';
+import { ProductModel } from '../../core/models/product.model';
 
 export class ItemModel extends ProductModel {
   description: string = '';

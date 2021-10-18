@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { NgModuleFactory } from '@angular/core/src/r3_symbols';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FavoritesModule } from 'src/app/modules/favorites/favorites.module';
+import { FavoritesModule } from 'src/app/favorites/favorites.module';
 
 @Injectable({
   providedIn: 'root'

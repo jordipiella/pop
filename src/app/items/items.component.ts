@@ -3,8 +3,8 @@ import { ItemModel } from './models/item.model';
 import { ItemsFacade } from './services/items.facade';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { OrderEnum, IQueryParams, IApiResponse } from '@api';
-import { IFilter } from '../../core/interfaces/filter.interface';
+import { OrderEnum, IQueryParams, IApiResponse } from 'src/app/items/api';
+import { IFilter } from '../core/interfaces/filter.interface';
 
 
 @Component({

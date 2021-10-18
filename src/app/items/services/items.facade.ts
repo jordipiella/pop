@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { IQueryParams } from '@api';
+import { IQueryParams } from 'src/app/items/api';
 import { getItems, resetStateItems, setFavPropItems } from '../state/items.actions';
 import { ItemsState } from '../state/items.reducer';
 import { ItemModel } from '../models/item.model';
 import { selectItems, selectTotal, selectLoading } from '../state/items.selector';
 import { Observable } from 'rxjs';
-import { AppFacade } from '../../../core/services/app.facade';
-import { IFilter } from '../../../core/interfaces/filter.interface';
-import { ProductModel } from '../../../core/models/product.model';
+import { AppFacade } from '../../core/services/app.facade';
+import { IFilter } from '../../core/interfaces/filter.interface';
+import { ProductModel } from '../../core/models/product.model';
 
 @Injectable({
   providedIn: 'root'

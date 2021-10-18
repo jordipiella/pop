@@ -6,7 +6,7 @@ import { ItemContract } from '../../contracts/item.contract';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { IQueryParams } from '../../interfaces/query-params.interface';
 import { IApiResponse } from '../../interfaces/response.interface';
-import { API_ITEMS_URL, API_DEFAULT_PAGE, API_DEFAULT_LIMIT } from '@api';
+import { API_ITEMS_URL, API_DEFAULT_PAGE, API_DEFAULT_LIMIT } from 'src/app/items/api';
 
 @Injectable({
   providedIn: 'root'

@@ -3,8 +3,8 @@ import { ItemModel } from '../../models/item.model';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ItemTranslator } from '../../translate/item.translator';
-import { IApiResponse, ApiItemsService, IQueryParams, ItemContract } from '@api';
-import { AppFacade } from '../../../../core/services/app.facade';
+import { IApiResponse, ApiItemsService, IQueryParams, ItemContract } from 'src/app/items/api';
+import { AppFacade } from '../../../core/services/app.facade';
 
 @Injectable({
   providedIn: 'root'

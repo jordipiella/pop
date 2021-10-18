@@ -6,14 +6,14 @@ import {
   IApiResponse,
   ItemContract,
   IQueryParams
-} from '@api';
+} from 'src/app/items/api';
 import { of } from 'rxjs';
 import { ItemsService } from './items.service';
 import { itemMockModel } from '../../mocks/item-mock.model';
 import { ItemModel } from '../../models/item.model';
 import { ItemTranslator } from '../../translate/item.translator';
 import { provideMockStore } from '@ngrx/store/testing';
-import { AppFacade } from '../../../../core/services/app.facade';
+import { AppFacade } from '../../../core/services/app.facade';
 import { FormBuilder } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 

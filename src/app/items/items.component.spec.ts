@@ -3,15 +3,15 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
-import { IQueryParams } from '@api';
+import { IQueryParams } from 'src/app/items/api';
 import { ItemsComponent } from './items.component';
 import { ItemsFacade } from './services/items.facade';
 import { itemMockModel } from './mocks/item-mock.model';
 import { ItemModel } from './models/item.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MockComponent } from '../../core/mocks/mock-component';
-import { IFilter } from '../../core/interfaces/filter.interface';
-import { productMockModel } from '../../core/mocks/product-mock.model';
+import { MockComponent } from '../core/mocks/mock-component';
+import { IFilter } from '../core/interfaces/filter.interface';
+import { productMockModel } from '../core/mocks/product-mock.model';
 
 const initialState: unknown = {
   data: [],

@@ -35,8 +35,8 @@ export class FavoriteService {
   }
 
   async openFavoritesInModal(): Promise<void> {
-    const { FavoritesComponent } = await import('../../../modules/favorites/favorites.component');
-    const { FavoritesModule } = await import('../../../modules/favorites/favorites.module');
+    const { FavoritesComponent } = await import('../../../favorites/favorites.component');
+    const { FavoritesModule } = await import('../../../favorites/favorites.module');
     this.modalService.openModal(FavoritesComponent, FavoritesModule);
   }
 

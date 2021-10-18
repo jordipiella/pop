@@ -3,11 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { productMockModel } from '@core';
 import { of } from 'rxjs';
-import * as fromFavorites from '../../../core/state/favorites/favorites.reducer';
+import * as fromFavorites from '../../core/state/favorites/favorites.reducer';
 import { FavoritesFacade } from './favorite.facade';
-import { AppFacade } from '../../../core/services/app.facade';
-import { IFavoritesState } from '../../../core/state/favorites/favorites.reducer';
-import { ProductModel } from '../../../core/models/product.model';
+import { AppFacade } from '../../core/services/app.facade';
+import { IFavoritesState } from '../../core/state/favorites/favorites.reducer';
+import { ProductModel } from '../../core/models/product.model';
 import { FormBuilder } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { ApiItemsService } from './api-items.service';
 import { RouterTestingModule } from '@angular/router/testing';
-import { environment } from '../../../../../../environments/environment';
+import { environment } from '../../../../../environments/environment';
 import { ItemContract } from '../../contracts/item.contract';
 import { itemMockContract } from '../../mocks/item-mock.contract';
 import { IApiResponse } from '../../interfaces/response.interface';

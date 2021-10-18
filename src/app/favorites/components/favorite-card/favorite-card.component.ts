@@ -1,5 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
-import { ProductModel } from '../../../../core/models/product.model';
+import { ProductModel } from '../../../core/models/product.model';
 
 @Component({
   selector: 'app-favorite-card',
