@@ -16,6 +16,7 @@ import { provideMockStore } from '@ngrx/store/testing';
 import { AppFacade } from '../../../core/services/app.facade';
 import { FormBuilder } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { ApiItemsParamsService } from '../../api/services/api-items-params/api-items-params.service';
 
 const initialState: unknown = {
   data: [],
@@ -41,6 +42,7 @@ let mockRes: IApiResponse<ItemContract> = {
 describe('ItemsService', () => {
   let service: ItemsService;
   let apiItems: ApiItemsService;
+  let apiItemsParams: ApiItemsParamsService;
   let appFacade: AppFacade;
 
   beforeEach(() => {
@@ -59,6 +61,7 @@ describe('ItemsService', () => {
     service = TestBed.inject(ItemsService);
     apiItems = TestBed.inject(ApiItemsService);
     appFacade = TestBed.inject(AppFacade);
+    apiItemsParams = TestBed.inject(ApiItemsParamsService);
   });
   afterEach(() => {
     mockRes = {
@@ -106,6 +109,7 @@ describe('ItemsService', () => {
       expect(apiItems.getAll).toHaveBeenCalledWith(params);
     });
   });
+
   describe('#setFavorieProp()', () => {
     it('should call appFacade.isInFavorites and set fav property to true', () => {
       spyOn(appFacade, 'isInFavorites').and.returnValue(true);
@@ -123,6 +127,61 @@ describe('ItemsService', () => {
       expect(res[1].favorite).toEqual(false);
       expect(appFacade.isInFavorites).toHaveBeenCalledTimes(2);
       expect(appFacade.isInFavorites).toHaveBeenCalledWith(itemWithFavTrue);
+    });
+  });
+
+  describe('#get params()', () => {
+    it('should get apiItemsParams.params', () => {
+      spyOnProperty(apiItemsParams, 'params', 'get').and.returnValue({ _page: 0, _limit: 5 });
+      expect(service.params).toEqual({ _page: 0, _limit: 5 })
+    });
+  });
+
+  describe('#set params()', () => {
+    it('should call apiItemsParams.params', () => {
+      const setSpy: jasmine.Spy = spyOnProperty(apiItemsParams, 'params', 'set');
+      service.params = { _page: 0, _limit: 5 };
+      expect(setSpy).toHaveBeenCalledOnceWith({ _page: 0, _limit: 5 });
+    });
+  });
+
+  describe('#setSort()', () => {
+    it('should call apiItemsParams.setSort', () => {
+      spyOn(apiItemsParams, 'setSort');
+      service.setSort('sort');
+      expect(apiItemsParams.setSort).toHaveBeenCalledOnceWith('sort');
+    });
+  });
+
+  describe('#removeSort()', () => {
+    it('should call apiItemsParams.removeSort', () => {
+      spyOn(apiItemsParams, 'removeSort');
+      service.removeSort();
+      expect(apiItemsParams.removeSort).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#setSearch()', () => {
+    it('should call apiItemsParams.setSearch', () => {
+      spyOn(apiItemsParams, 'setSearch');
+      service.setSearch('search');
+      expect(apiItemsParams.setSearch).toHaveBeenCalledOnceWith('search');
+    });
+  });
+
+  describe('#removeSearch()', () => {
+    it('should call apiItemsParams.removeSearch', () => {
+      spyOn(apiItemsParams, 'removeSearch');
+      service.removeSearch();
+      expect(apiItemsParams.removeSearch).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('#resetParams()', () => {
+    it('should call apiItemsParams.resetParams', () => {
+      spyOn(apiItemsParams, 'resetParams');
+      service.resetParams();
+      expect(apiItemsParams.resetParams).toHaveBeenCalledTimes(1);
     });
   });
 
