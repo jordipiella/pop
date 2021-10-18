@@ -12,7 +12,7 @@ import { ViewContainerRef } from '@angular/core';
 import { FilterEnum, IFilter, ViewContainerRefMock } from '@core';
 import { of } from 'rxjs';
 import { FavoriteService } from './favorites/favorite.service';
-import { itemMockModel } from '../../modules/items/mocks/item-mock.model';
+import { itemMockModel } from '../../items/mocks/item-mock.model';
 import { FiltersService } from './filters/filters.service';
 import { IFilterOption } from '../interfaces/filter-option.interface';
 import { FormBuilder } from '@angular/forms';

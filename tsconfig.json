@@ -22,7 +22,7 @@
     ],
     "paths": {
       "@core": ["src/app/core"],
-      "@api": ["src/app/modules/items/api"]
+      "@api": ["src/app/items/api"]
     }
   },
   "angularCompilerOptions": {
