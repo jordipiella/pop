@@ -13,7 +13,6 @@ import { httpLoaderFactory } from './utils/http-loader.factory';
 import { CoreModule } from '@core';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -39,8 +38,7 @@ import { SharedModule } from './shared/shared.module';
     AngularSvgIconModule.forRoot(),
     CoreModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    SharedModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
