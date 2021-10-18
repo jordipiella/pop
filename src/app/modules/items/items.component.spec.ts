@@ -11,12 +11,16 @@ import { ItemModel } from './models/item.model';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MockComponent } from '../../core/mocks/mock-component';
 import { IFilter } from '../../core/interfaces/filter.interface';
+import { productMockModel } from '../../core/mocks/product-mock.model';
 
 const initialState: unknown = {
   data: [],
   total: null,
   loading: false,
   error: null
+};
+const initialFavState: unknown = {
+  data: []
 };
 const fb: FormBuilder = new FormBuilder();
 
@@ -41,7 +45,12 @@ describe('ItemsComponent', () => {
       providers: [
         TranslateService,
         FormBuilder,
-        provideMockStore({ initialState: { items: initialState }})
+        provideMockStore({
+          initialState: {
+            items: initialState,
+            favorites: initialFavState
+          }
+        })
       ]
     }).compileComponents();
 
@@ -59,12 +68,14 @@ describe('ItemsComponent', () => {
       spyOn(component, 'totalSub');
       spyOn(component, 'loadingSub');
       spyOn(component, 'filtersSub');
+      spyOn(component, 'favoritesSub');
       spyOn(component, 'getAllItems');
       component.ngOnInit();
       expect(component.itemsSub).toHaveBeenCalledTimes(1);
       expect(component.totalSub).toHaveBeenCalledTimes(1);
       expect(component.loadingSub).toHaveBeenCalledTimes(1);
       expect(component.filtersSub).toHaveBeenCalledTimes(1);
+      expect(component.favoritesSub).toHaveBeenCalledTimes(1);
       expect(component.getAllItems).toHaveBeenCalledOnceWith(queryParams);
     });
   });
@@ -75,6 +86,18 @@ describe('ItemsComponent', () => {
       spyOn(component.subscriptions[0], 'unsubscribe');
       component.ngOnDestroy();
       expect(component.subscriptions[0].unsubscribe).toHaveBeenCalled();
+    });
+  });
+
+  describe('#favoritesSub', () => {
+    it('should call itemsFacade.setFavoriteProp and push subs to Subscription[]', () => {
+      spyOn(itemsFacade, 'setFavoriteProp');
+      spyOnProperty(itemsFacade, 'favorites$', 'get').and.returnValue(of([ productMockModel ]));
+      spyOn(component.subscriptions, 'push');
+      component.items = [ itemMockModel ];
+      component.favoritesSub();
+      expect(itemsFacade.setFavoriteProp).toHaveBeenCalledWith([ itemMockModel ]);
+      expect(component.subscriptions.push).toHaveBeenCalledTimes(1);
     });
   });
 
