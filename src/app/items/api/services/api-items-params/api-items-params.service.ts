@@ -13,7 +13,7 @@ export class ApiItemsParamsService {
     _page: API_DEFAULT_PAGE,
   };
 
-  private _paramsSubject: BehaviorSubject<IQueryParams> = new BehaviorSubject(this.defaultQueryParams);
+  private _paramsSubject: BehaviorSubject<IQueryParams> = new BehaviorSubject({ ...this.defaultQueryParams });
   params$: Observable<IQueryParams> = this._paramsSubject.asObservable();
 
   constructor(
@@ -62,7 +62,10 @@ export class ApiItemsParamsService {
   }
 
   resetParams(): void {
-    this.params = this.defaultQueryParams;
+    this.params = {
+      _limit: API_DEFAULT_LIMIT,
+      _page: API_DEFAULT_PAGE
+    }
   }
 
 }

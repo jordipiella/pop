@@ -67,9 +67,9 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
 
   setFilterValue(filterValues: any): void {
+    this.resetList();
     this.setSearch(filterValues?.search);
     this.setSort(filterValues?.sort);
-    this.resetList();
     this.getAllItems(this.itemsFacade.params);
   }
 
