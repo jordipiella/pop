@@ -4,6 +4,7 @@ export * from './api.module';
 
 // Services
 export * from './services/api-items/api-items.service';
+export * from './services/api-items-params/api-items-params.service';
 
 // Contracts
 export * from './contracts/item.contract';

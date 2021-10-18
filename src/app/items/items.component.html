@@ -5,7 +5,7 @@
 </app-grid>
 
 <app-grid *ngIf="loading">
-  <ng-container *ngFor="let key of queryParams._limit | numberToArray">
+  <ng-container *ngFor="let key of 5 | numberToArray">
     <app-skeleton-card></app-skeleton-card>
   </ng-container>
 </app-grid>

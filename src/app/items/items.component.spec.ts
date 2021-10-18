@@ -61,9 +61,9 @@ describe('ItemsComponent', () => {
   }));
 
   describe('#ngOnInit', () => {
-    it('should call itemsSub, totalSub, sortSub, getAllItems', () => {
+    it('should call itemsSub, totalSub, sortSub, getAllItems, ...', () => {
       const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      component.queryParams = queryParams;
+      spyOnProperty(itemsFacade, 'params', 'get').and.returnValue(queryParams);
       spyOn(component, 'itemsSub');
       spyOn(component, 'totalSub');
       spyOn(component, 'loadingSub');
@@ -71,6 +71,7 @@ describe('ItemsComponent', () => {
       spyOn(component, 'favoritesSub');
       spyOn(component, 'getAllItems');
       component.ngOnInit();
+      expect(itemsFacade.params).toEqual(queryParams);
       expect(component.itemsSub).toHaveBeenCalledTimes(1);
       expect(component.totalSub).toHaveBeenCalledTimes(1);
       expect(component.loadingSub).toHaveBeenCalledTimes(1);
@@ -137,6 +138,8 @@ describe('ItemsComponent', () => {
 
   describe('#setFilterValue', () => {
     it('should call setSearch, setSort, resetList, getAllItems', () => {
+      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
+      spyOnProperty(itemsFacade, 'params', 'get').and.returnValue(queryParams);
       spyOn(component, 'setSearch');
       spyOn(component, 'setSort');
       spyOn(component, 'resetList');
@@ -144,54 +147,34 @@ describe('ItemsComponent', () => {
       component.setFilterValue({ sort: 'sort', search: 'search' });
       expect(component.setSearch).toHaveBeenCalledOnceWith('search');
       expect(component.setSort).toHaveBeenCalledOnceWith('sort');
+      expect(itemsFacade.params).toEqual(queryParams);
       expect(component.resetList).toHaveBeenCalledTimes(1);
-      expect(component.getAllItems).toHaveBeenCalledOnceWith({ _limit: 5, _page: 1 });
+      expect(component.getAllItems).toHaveBeenCalledOnceWith(queryParams);
     });
   });
 
   describe('#setSearch', () => {
-    it('should set q to query params', () => {
-      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1, q: 'value' };
-      component.queryParams = queryParams;
+    it('should call component.setSearch with value', () => {
+      spyOn(itemsFacade, 'setSearch');
       component.setSearch('value');
-      expect(component.queryParams).toEqual(queryParamsRes);
-    });
-    it('should remove q to query params', () => {
-      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1 };
-      const queryParams: IQueryParams = { _limit: 5, _page: 1, q: 'value' };
-      component.queryParams = queryParams;
-      component.setSearch('');
-      expect(component.queryParams).toEqual(queryParamsRes);
+      expect(itemsFacade.setSearch).toHaveBeenCalledOnceWith('value');
     });
   });
 
 
   describe('#setSort', () => {
-    it('should set _sort and default order asc', () => {
-      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1, _sort: 'title', _order: 'asc' };
-      component.queryParams = queryParams;
-      spyOn(component, 'removeSort');
-      component.setSort('title');
-      expect(component.removeSort).not.toHaveBeenCalled();
-      expect(component.queryParams).toEqual(queryParamsRes);
-    });
-    it('should call removeSort if value is null', () => {
-      const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      spyOn(component, 'removeSort');
-      component.setSort('');
-      expect(component.removeSort).toHaveBeenCalled();
+    it('should call itemsFacade.setSort with value', () => {
+      spyOn(itemsFacade, 'setSort');
+      component.setSort('value');
+      expect(itemsFacade.setSort).toHaveBeenCalledOnceWith('value');
     });
   });
 
   describe('#removeSort', () => {
     it('should remove sort From queryParams', () => {
-      const queryParamsRes: IQueryParams = { _limit: 5, _page: 1 };
-      const queryParams: IQueryParams = { _limit: 5, _page: 1, _sort: 'title', _order: 'asc' };
-      component.queryParams = queryParams;
+      spyOn(itemsFacade, 'removeSort');
       component.removeSort();
-      expect(component.queryParams).toEqual(queryParamsRes);
+      expect(itemsFacade.removeSort).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -199,11 +182,11 @@ describe('ItemsComponent', () => {
     it('should ', () => {
       component.items = [ itemMockModel ];
       spyOn(itemsFacade, 'resetStateItems');
+      spyOn(itemsFacade, 'resetParams');
       component.resetList();
       expect(component.items).toEqual([]);
       expect(itemsFacade.resetStateItems).toHaveBeenCalled();
-      expect(component.queryParams._page).toEqual(1);
-      expect(component.queryParams._limit).toEqual(5);
+      expect(itemsFacade.resetParams).toHaveBeenCalled();
     });
   });
 
@@ -273,22 +256,24 @@ describe('ItemsComponent', () => {
   describe('#loadMore', () => {
     it('should call getAllItems and add +1 to page', () => {
       const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      component.queryParams = queryParams;
+      spyOnProperty(itemsFacade, 'params', 'get').and.returnValue(queryParams);
+      const setSpy: jasmine.Spy = spyOnProperty(itemsFacade, 'params', 'set');
       component.total = 15;
       spyOn(component, 'getAllItems');
       component.loadMore();
       expect(component.getAllItems).toHaveBeenCalledWith(queryParams);
-      expect(component.queryParams).toEqual({ _limit: 5, _page: 2 })
+      expect(setSpy).toHaveBeenCalledOnceWith(queryParams);
     });
     it('should don`t call getAllItems', () => {
       const queryParams: IQueryParams = { _limit: 5, _page: 1 };
-      component.queryParams = queryParams;
+      spyOnProperty(itemsFacade, 'params', 'get').and.returnValue(queryParams);
+      const setSpy: jasmine.Spy = spyOnProperty(itemsFacade, 'params', 'set');
       component.items = [itemMockModel];
       component.total = 1;
       spyOn(component, 'getAllItems');
       component.loadMore();
       expect(component.getAllItems).not.toHaveBeenCalledWith(queryParams);
-      expect(component.queryParams).toEqual({ _limit: 5, _page: 1 })
+      expect(setSpy).not.toHaveBeenCalled();
     });
   });
 

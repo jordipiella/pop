@@ -3,7 +3,7 @@ import { ItemModel } from './models/item.model';
 import { ItemsFacade } from './services/items.facade';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { OrderEnum, IQueryParams, IApiResponse } from 'src/app/items/api';
+import { IQueryParams, IApiResponse } from 'src/app/items/api';
 import { IFilter } from '../core/interfaces/filter.interface';
 
 
@@ -15,11 +15,10 @@ import { IFilter } from '../core/interfaces/filter.interface';
 export class ItemsComponent implements OnInit, OnDestroy {
 
   items: ItemModel[] = [];
-  itemsPag: IApiResponse<ItemModel> = { total: 0, data: [] };
   total: number = 0;
-  subscriptions: Subscription[] = [];
-  queryParams: IQueryParams = { _limit: 5, _page: 1 };
   loading: boolean = false;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private itemsFacade: ItemsFacade
@@ -31,7 +30,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.loadingSub();
     this.filtersSub();
     this.favoritesSub();
-    this.getAllItems(this.queryParams);
+    this.getAllItems(this.itemsFacade.params);
   }
 
   ngOnDestroy(): void {
@@ -71,36 +70,25 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.setSearch(filterValues?.search);
     this.setSort(filterValues?.sort);
     this.resetList();
-    this.getAllItems(this.queryParams);
+    this.getAllItems(this.itemsFacade.params);
   }
 
   setSearch(value: string): void {
-    if (!value) {
-      delete this.queryParams.q;
-      return;
-    }
-    this.queryParams.q = value;
+    this.itemsFacade.setSearch(value);
   }
 
   setSort(value: string): void {
-    if (!value || value === null) {
-      this.removeSort();
-      return;
-    }
-    this.queryParams._sort = value;
-    this.queryParams._order = OrderEnum.asc;
+    this.itemsFacade.setSort(value);
   }
 
   removeSort(): void {
-    delete this.queryParams._order;
-    delete this.queryParams._sort;
+    this.itemsFacade.removeSort();
   }
 
   resetList(): void {
     this.itemsFacade.resetStateItems();
     this.items = [];
-    this.queryParams._page = 1;
-    this.queryParams._limit = 5;
+    this.itemsFacade.resetParams();
   }
 
   itemsSub(): void {
@@ -133,8 +121,10 @@ export class ItemsComponent implements OnInit, OnDestroy {
 
   loadMore(): void {
     if (this.items.length < this.total) {
-      this.queryParams._page += 1;
-      this.getAllItems(this.queryParams);
+      const params: IQueryParams = this.itemsFacade.params;
+      params._page += 1;
+      this.itemsFacade.params = params;
+      this.getAllItems(this.itemsFacade.params);
     }
   }
 
