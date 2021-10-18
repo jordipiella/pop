@@ -8,6 +8,7 @@ import { selectItems, selectTotal, selectLoading } from '../state/items.selector
 import { Observable } from 'rxjs';
 import { AppFacade } from '../../../core/services/app.facade';
 import { IFilter } from '../../../core/interfaces/filter.interface';
+import { ProductModel } from '../../../core/models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class ItemsFacade {
 
   selectedFilters(): Observable<IFilter> {
     return this.appFacade.selectedFilters();
+  }
+
+  get favorites$(): Observable<ProductModel[]> {
+    return this.appFacade.favorites$;
   }
 
 }

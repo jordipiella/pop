@@ -13,6 +13,8 @@ import { getItems, resetStateItems, setFavPropItems } from '../state/items.actio
 import { AppFacade } from '../../../core/services/app.facade';
 import { FormBuilder } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { productMockModel } from '../../../core/mocks/product-mock.model';
+import { ProductModel } from '../../../core/models/product.model';
 
 const itemRes: ItemModel[] = [
   itemMockModel,
@@ -89,6 +91,13 @@ describe('ItemsFacade', () => {
       spyOn(store, 'dispatch');
       service.setFavoriteProp([ itemMockModel ]);
       expect(store.dispatch).toHaveBeenCalledWith(setFavPropItems({ data: [ itemMockModel ] }));
+    });
+  });
+
+  describe('#get favorites$()', () => {
+    it('should return Observable<ProductModel>', () => {
+      appFacade.favorites$ = of([ productMockModel ]);
+      service.favorites$.subscribe((res: ProductModel[]) => expect(res).toEqual([ productMockModel ]));
     });
   });
 });

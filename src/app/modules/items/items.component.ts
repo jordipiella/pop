@@ -22,7 +22,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   loading: boolean = false;
 
   constructor(
-    private itemsFacade: ItemsFacade,
+    private itemsFacade: ItemsFacade
   ) { }
 
   ngOnInit(): void {
@@ -30,11 +30,20 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.totalSub();
     this.loadingSub();
     this.filtersSub();
+    this.favoritesSub();
     this.getAllItems(this.queryParams);
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((x: Subscription) => x.unsubscribe());
+  }
+
+  favoritesSub(): void {
+    const favSubs: Subscription = this.itemsFacade.favorites$
+      .pipe(
+        tap(() => this.itemsFacade.setFavoriteProp(this.items))
+      ).subscribe()
+    this.subscriptions.push(favSubs);
   }
 
   loadingSub(): void {
@@ -97,7 +106,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   itemsSub(): void {
     const itemsSubs: Subscription = this.itemsFacade.items$
       .pipe(
-        tap((items: ItemModel[]) => this.setItems(items))
+        tap((items: ItemModel[]) => this.setItems(items)),
       ).subscribe();
     this.subscriptions.push(itemsSubs);
   }

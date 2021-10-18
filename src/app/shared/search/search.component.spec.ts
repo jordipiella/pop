@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchComponent } from './search.component';
 import { MockComponent } from '@core';
 import { of } from 'rxjs';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 
 describe('SearchComponent', () => {
   let component: SearchComponent;
@@ -17,6 +17,9 @@ describe('SearchComponent', () => {
       ],
       providers: [
         FormBuilder
+      ],
+      imports: [
+        ReactiveFormsModule
       ]
     })
     .compileComponents();

@@ -8,7 +8,7 @@
 </div>
 
 <ng-template #image let-favorite>
-  <div *ngIf="favorite?.image" class="overflow-hidden h-40">
+  <div *ngIf="favorite?.image" class="overflow-hidden sm:h-44 md:h-40">
     <img class="rounded-t-lg w-full" [src]="favorite.image" alt="" />
   </div>
 </ng-template>
@@ -22,7 +22,7 @@
 
 <ng-template #content let-favorite>
   <div class="pb-6 pt-2 px-4 rounded-lg bg-white">
-    <h1 class="line-clamp-2 h-16">{{ favorite?.title }}</h1>
+    <h2 class="line-clamp-2 h-16">{{ favorite?.title }}</h2>
   </div>
 </ng-template>
 

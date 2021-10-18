@@ -12,7 +12,6 @@ describe('Home', () => {
     cy.intercept('GET', '/items*').as('getItems')
     cy.wait(['@getItems']).then(
       (getItems) => {
-        console.log(getItems);
         cy.get('app-item-card').should('have.length', 5);
       }
     );

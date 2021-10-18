@@ -16,7 +16,8 @@ describe('ItemCardComponent', () => {
         ItemCardComponent,
         MockComponent({ selector: 'app-card' }),
         MockComponent({ selector: 'svg-icon' }),
-        MockComponent({ selector: 'app-badge' })
+        MockComponent({ selector: 'app-badge' }),
+        MockComponent({ selector: 'app-tooltip' })
       ],
       imports: [
         HttpClientTestingModule
