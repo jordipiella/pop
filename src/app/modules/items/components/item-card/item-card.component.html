@@ -27,8 +27,8 @@
 
 <ng-template #content let-item>
   <div class="pb-6 pt-2 px-4 rounded-lg bg-white">
-    <h1 class="line-clamp-2 h-16">{{ item?.title }}</h1>
-    <p class="line-clamp-3">
+    <h2 class="line-clamp-2 h-16">{{ item?.title }}</h2>
+    <p class="line-clamp-3 h-24">
       {{ item?.description }}
     </p>
   </div>
@@ -52,7 +52,7 @@
             {{ item?.email }}
           </ng-container>
           <ng-container element>
-            <svg-icon src="./assets/svg/mail.svg" class="mr-4 w-4 cursor-pointer"></svg-icon>
+            <svg-icon src="./assets/svg/mail.svg" class="mr-8 w-4 cursor-default"></svg-icon>
           </ng-container>
         </app-tooltip>
       </span>
