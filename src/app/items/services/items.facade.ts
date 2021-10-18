@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { AppFacade } from '../../core/services/app.facade';
 import { IFilter } from '../../core/interfaces/filter.interface';
 import { ProductModel } from '../../core/models/product.model';
+import { ItemsService } from './items/items.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class ItemsFacade {
 
   constructor(
     private store: Store<ItemsState>,
-    private appFacade: AppFacade
+    private appFacade: AppFacade,
+    private itemsService: ItemsService
   ) { }
 
   getAllItems(queryParams: IQueryParams): void {
@@ -50,6 +52,34 @@ export class ItemsFacade {
 
   get favorites$(): Observable<ProductModel[]> {
     return this.appFacade.favorites$;
+  }
+
+  get params(): IQueryParams {
+    return this.itemsService.params;
+  }
+
+  set params(value: IQueryParams) {
+    this.itemsService.params = value;
+  }
+
+  setSort(value: string): void {
+   this.itemsService.setSort(value);
+  }
+
+  removeSort(): void {
+    this.itemsService.removeSort();
+  }
+
+  setSearch(value: string): void {
+    this.itemsService.setSearch(value);
+  }
+
+  removeSearch(): void {
+    this.itemsService.removeSearch();
+  }
+
+  resetParams(): void {
+    this.itemsService.resetParams();
   }
 
 }
