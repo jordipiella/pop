@@ -34,6 +34,8 @@ By defaults in PORT 3000, if you want to change PORT `run json-server --watch db
 npm run start
 ```
 
+Open http:// localhost:4200
+
 ## Running unit tests
 
 Run `ng test --code-coverage` to execute the unit tests via [Karma]
