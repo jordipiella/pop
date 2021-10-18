@@ -1,0 +1,16 @@
+<h1 class="p-2">{{ 'favorites.title' | translate }}</h1>
+
+<app-search
+  *ngIf="searchForm"
+  [formControl]="searchForm"
+  [placeholder]="'actions.search' | translate">
+</app-search>
+
+<app-grid>
+  <ng-container *ngFor="let favorite of favorites">
+    <app-favorite-card [favorite]="favorite" (clickToRemove)="removeFavorite($event)"></app-favorite-card>
+  </ng-container>
+</app-grid>
+
+<p *ngIf="!favorites?.length" class="text-center p-3 text-bold">{{ 'favorites.not-found' | translate }}</p>
+

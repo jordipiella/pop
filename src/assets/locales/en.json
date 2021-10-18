@@ -1,0 +1,38 @@
+{
+  "app-title": "Title Pop",
+  "header": {
+    "title": "POP Items"
+  },
+  "actions": {
+    "load-more": "Load more",
+    "search": "Search..."
+  },
+  "favorites": {
+    "title": "Favorites",
+    "not-found": "Not found",
+    "added": {
+      "title": "Added to favorites!",
+      "text": "Item successfully added to favorites"
+    },
+    "removed": {
+      "title": "Removed from favorites!",
+      "text": "Item successfully removed from favorites"
+    }
+  },
+  "error": {
+    "title": "An error has occurred",
+    "text": "We have had some issues, please try again later"
+  },
+  "filters": {
+    "search": {
+      "placeholder": "Search by..."
+    },
+    "sort": {
+      "sort-by": "Sort by",
+      "title": "Title",
+      "description": "Description",
+      "price": "Price",
+      "email": "Email"
+    }
+  }
+}

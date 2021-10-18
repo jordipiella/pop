@@ -1,0 +1,15 @@
+
+<div *ngIf="isTooltipVisible" class="absolute tooltip-position z-10">
+  <div class="relative mx-2">
+    <div class="bg-black text-white text-sm rounded p-4 right-0 bottom-full">
+      <ng-content select="[content]"></ng-content>
+      <svg class="absolute text-black h-2 left-0 ml-3 top-full" x="0px" y="0px" viewBox="0 0 255 255" xml:space="preserve"><polygon class="fill-current" points="0,0 127.5,127.5 255,0"/></svg>
+    </div>
+  </div>
+</div>
+<div (mouseover)="setIsTooltipVisible(true)" (mouseout)="setIsTooltipVisible(false)">
+  <ng-content select="[element]"></ng-content>
+</div>
+
+
+

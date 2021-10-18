@@ -1,1 +1,28 @@
 /* You can add global styles to this file, and also import other style files */
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import "tailwindcss/screens";
+
+$primary: #13c1ac;
+$hover: #0F9989;
+$secondary: #253238;
+$text: #607D8B;
+$background: #ECEFF1;
+
+
+body {
+  background-color: $background;
+}
+
+h1 {
+  @apply text-gray-700 font-bold text-2xl mb-3 hover:text-gray-900;
+}
+
+h2 {
+  @apply text-gray-700 font-bold text-2xl mb-3 hover:text-gray-900;
+}
+
+p {
+  @apply text-gray-700 text-sm;
+}

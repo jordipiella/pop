@@ -1,0 +1,72 @@
+<div class="p-2">
+  <app-card>
+    <ng-container image *ngTemplateOutlet="image; context:{ $implicit: item }">
+    </ng-container>
+    <ng-container body *ngTemplateOutlet="body; context:{ $implicit: item }">
+    </ng-container>
+  </app-card>
+</div>
+
+<ng-template #image let-item>
+  <div *ngIf="item?.image" class="overflow-hidden sm:h-44 md:h-40">
+    <img class="rounded-t-lg w-full" [src]="item.image" alt="" />
+  </div>
+</ng-template>
+
+<ng-template #body let-item>
+  <ng-container
+    *ngTemplateOutlet="subImage; context:{ $implicit: item }">
+  </ng-container>
+  <ng-container
+    *ngTemplateOutlet="content; context:{ $implicit: item }">
+  </ng-container>
+  <ng-container
+    *ngTemplateOutlet="footer; context:{ $implicit: item }">
+  </ng-container>
+</ng-template>
+
+<ng-template #content let-item>
+  <div class="pb-6 pt-2 px-4 rounded-lg bg-white relative">
+    <h2 class="line-clamp-2 h-16">{{ item?.title }}</h2>
+    <app-tooltip>
+      <ng-container content>
+        {{ item?.description }}
+      </ng-container>
+      <ng-container element>
+        <p class="line-clamp-3 h-24">
+          {{ item?.description }}
+        </p>
+        </ng-container>
+    </app-tooltip>
+
+  </div>
+</ng-template>
+
+<ng-template #subImage let-item>
+  <div class="flex items-center justify-items-end flex-row-reverse px-4 py-1">
+    <app-badge>
+      {{ item?.price }}
+      <svg-icon src="./assets/svg/euro.svg" class="ml-1 w-4"></svg-icon>
+    </app-badge>
+  </div>
+</ng-template>
+
+<ng-template #footer let-item>
+  <div class="py-2 px-4 border-t text-xs text-gray-700">
+    <p class="text-xs flex">
+      <span class="relative">
+        <app-tooltip>
+          <ng-container content>
+            {{ item?.email }}
+          </ng-container>
+          <ng-container element>
+            <svg-icon src="./assets/svg/mail.svg" class="mr-8 w-4 cursor-default"></svg-icon>
+          </ng-container>
+        </app-tooltip>
+      </span>
+      <span>
+        <svg-icon (click)="toFavorite(item)" src="./assets/svg/star.svg" [class.text-primary]="item?.favorite" class="mr-1 w-4 hover:text-primary cursor-pointer"></svg-icon>
+      </span>
+      </p>
+  </div>
+</ng-template>
